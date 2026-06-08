@@ -1,25 +1,47 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
-use Spatie\Permission\Models\Role;
 
-
-
-
+// Page d'accueil
 Route::get('/', function () {
-
-
-
     return view('welcome');
 });
 
-Route::get('/register', [\App\Http\Controllers\AuthController::class, 'showSignUp'])->name('register');
-Route::post('/register', [\App\Http\Controllers\AuthController::class, 'signUp'])->name('registration.register');
+// --- CRÉATION DU PREMIER ADMIN (une seule fois, sans formulaire) ---
+Route::get('/setup-admin', [AuthController::class, 'createAdmin'])->name('setup.admin');
 
-Route::get('/login', [\App\Http\Controllers\AuthController::class, 'showFormLogin'])->name('login');
-Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login.submit');
+// --- CONNEXION UNIQUEMENT (pas d'inscription publique) ---
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+});
 
-Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logOut'])->name('logout');
+// Déconnexion
+Route::post('/logout', [AuthController::class, 'logout'])
+    ->middleware('auth')
+    ->name('logout');
 
-Route::get('/dashboard', [\App\Http\Controllers\AccessControlController::class, 'dashboard'])->name('dashboard');
+// --- ZONES PROTÉGÉES PAR RÔLE ---
+// Rôles : admin | superviseur | agent-de-security
 
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard');
+    //ici Franck tu ajoutera les routes pour les admins
+});
+
+Route::middleware(['auth', 'role:superviseur'])->group(function () {
+    Route::get('/superviseur', function () {
+        return view('superviseur.dashboard');
+    })->name('superviseur.dashboard');
+    //ici Franck tu ajoutera les routes pour les superviseurs
+});
+
+Route::middleware(['auth', 'role:agent-de-security'])->group(function () {
+    Route::get('/agent-de-security', function () {
+        return view('agent-de-security.dashboard');
+    })->name('agent-de-security.dashboard');
+    //ici Franck tu ajoutera les routes pour les agents de security
+});
