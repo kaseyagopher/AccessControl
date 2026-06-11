@@ -95,7 +95,7 @@ class AuthController extends Controller
         return match (Auth::user()->role) {
             'admin' => redirect('/admin'),
             'superviseur' => redirect('/superviseur'),
-            'agent-de-security' => redirect('/agent-de-security'),
+            'agent-de-security' => redirect('/agent-securite'),
             default => abort(403, 'Rôle non reconnu.'),
         };
     }

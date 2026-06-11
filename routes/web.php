@@ -1,11 +1,12 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EnregistrementUser;
 use Illuminate\Support\Facades\Route;
 
 // Page d'accueil
 Route::get('/', function () {
-    return view('welcome');
+    return view ('welcome');
 });
 
 // --- CRÉATION DU PREMIER ADMIN (une seule fois, sans formulaire) ---
@@ -29,6 +30,16 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
+
+    Route::get('/enregistrement', function (){
+        return view('admin.formCreateUser');
+    })->name('admim.enregistrement');
+
+    Route::post('/enregistrement', [EnregistrementUser::class, 'store'])->name('admim.enregistrement');
+    Route::get('/update-user/{id}', [EnregistrementUser::class, 'edit'])->name('admin.update-user');
+    Route::put('/update-user/{id}', [EnregistrementUser::class, 'update'])->name('admin.update-user');
+    Route::get('users', [EnregistrementUser::class, 'list_users'])->name('admin.users');
+
     //ici Franck tu ajoutera les routes pour les admins
 });
 

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <title>@yield('title', 'AccessControl')</title>
 </head>
 <body>
@@ -21,7 +22,7 @@
         @endauth
     </nav>
 
-    <main>
+    <main class="w-full ">
         @if (session('success'))
             <p>{{ session('success') }}</p>
         @endif
