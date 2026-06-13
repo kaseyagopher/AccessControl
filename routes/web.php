@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EnregistrementUser;
+use App\Http\Controllers\updateInfos;
 use Illuminate\Support\Facades\Route;
 
 // Page d'accueil
@@ -38,9 +39,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/enregistrement', [EnregistrementUser::class, 'store'])->name('admim.enregistrement');
     Route::get('/update-user/{id}', [EnregistrementUser::class, 'edit'])->name('admin.update-user');
     Route::put('/update-user/{id}', [EnregistrementUser::class, 'update'])->name('admin.update-user');
-    Route::get('users', [EnregistrementUser::class, 'list_users'])->name('admin.users');
-
-    //ici Franck tu ajoutera les routes pour les admins
+    Route::get('/users', [EnregistrementUser::class, 'list_users'])->name('admin.users');
+    Route::get('/settings', [updateInfos::class, 'editAdminInfos'])->name('admin.settings.edit');
+    Route::put('/settings', [updateInfos::class, 'updateAdminInfos'])->name('admin.settings.update');
 });
 
 Route::middleware(['auth', 'role:superviseur'])->group(function () {
