@@ -42,6 +42,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/users', [EnregistrementUser::class, 'list_users'])->name('admin.users');
     Route::get('/settings', [updateInfos::class, 'editAdminInfos'])->name('admin.settings.edit');
     Route::put('/settings', [updateInfos::class, 'updateAdminInfos'])->name('admin.settings.update');
+    Route::delete('/settings/delete/{id}', [updateInfos::class, 'destroy'])->name('admin.users.destroy');
 });
 
 Route::middleware(['auth', 'role:superviseur'])->group(function () {
