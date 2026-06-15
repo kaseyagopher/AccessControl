@@ -67,7 +67,7 @@ class EnregistrementUser extends Controller
 
     public function list_users()
     {
-        $users = User::all();
+        $users = User::withTrashed()->get();
         return view('admin.users', compact('users'));
     }
 }

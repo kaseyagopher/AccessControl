@@ -43,6 +43,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/settings', [updateInfos::class, 'editAdminInfos'])->name('admin.settings.edit');
     Route::put('/settings', [updateInfos::class, 'updateAdminInfos'])->name('admin.settings.update');
     Route::delete('/settings/delete/{id}', [updateInfos::class, 'destroy'])->name('admin.users.destroy');
+    Route::delete('/settings/users/{id}/disable', [updateInfos::class, 'disable'])->name('admin.users.disable');
+    Route::patch('/settings/users/{id}/restore', [updateInfos::class, 'restore'])->name('admin.users.restore');
+
+
 });
 
 Route::middleware(['auth', 'role:superviseur'])->group(function () {

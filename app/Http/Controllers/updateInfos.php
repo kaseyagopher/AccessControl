@@ -54,4 +54,26 @@ class updateInfos extends Controller
 
         return redirect()->back()->with('success', "L'utilisateur a bien été supprimé.");
     }
+
+    public function disable(Request $request, $id)
+    {
+        $user = User::findOrFail($id); 
+        if ($user->id === auth()->id()) {
+            return redirect()->back()->with('error', 'Vous ne pouvez pas vous desactiver  vous-même !');
+        }
+
+        $user->delete();
+        return redirect()->back()->with('success', "Compte desactivé avec success !.");
+
+    }
+
+
+    public function restore ($id)
+    {
+        $user = User::withTrashed()->findOrFail($id); 
+        $user->restore();
+        
+        return redirect()->back()->with('success', "Compte réactivé avec success !.");
+
+    }
 }
