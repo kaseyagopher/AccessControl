@@ -53,6 +53,10 @@ Route::middleware(['auth', 'role:superviseur'])->group(function () {
     Route::get('/superviseur', function () {
         return view('superviseur.dashboard');
     })->name('superviseur.dashboard');
+
+    Route::get('/settings', [updateInfos::class, 'editSuperviseurInfos'])->name('superviseur.settings.edit');
+    Route::put('/settings', [updateInfos::class, 'updateInfos'])->name('superviseur.settings.update');
+
     //ici Franck tu ajoutera les routes pour les superviseurs
 });
 

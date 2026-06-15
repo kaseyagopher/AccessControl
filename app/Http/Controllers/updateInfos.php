@@ -14,10 +14,17 @@ class updateInfos extends Controller
     public function editAdminInfos()
     {
         $user = Auth::user();
-        return view('admin.settings', compact('user'));
+        return view('admin.editProfil', compact('user'));
     }
 
-    public function updateAdminInfos(Request $request)
+    public function editSuperviseurInfos()
+    {
+        $user = Auth::user();
+        return view('superviseur.editProfil', compact('user'));
+    }
+
+
+    public function updateInfos(Request $request)
     {
         $user = Auth::user();
 
