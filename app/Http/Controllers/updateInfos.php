@@ -2,27 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-
-
-use App\Models\User;
 
 class updateInfos extends Controller
 {
     public function editAdminInfos()
     {
-        $user = Auth::user();
-        return view('admin.editProfil', compact('user'));
+        return view('admin.editProfil', ['user' => Auth::user()]);
     }
 
     public function editSuperviseurInfos()
     {
-        $user = Auth::user();
-        return view('superviseur.editProfil', compact('user'));
+        return view('superviseur.editProfil', ['user' => Auth::user()]);
     }
 
+    public function updateAdminInfos(Request $request)
+    {
+        return $this->updateInfos($request);
+    }
 
     public function updateInfos(Request $request)
     {
@@ -30,57 +29,64 @@ class updateInfos extends Controller
 
         $validatedData = $request->validate([
             'name' => 'required|string|max:50',
-            'lastName' => 'nullable|string|max:50', 
+            'lastName' => 'nullable|string|max:50',
             'firstName' => 'nullable|string|max:50',
-            'email' => 'required|email|max:250|unique:users,email,' . $user->id,
-            'password' => 'nullable|string|max:50|min:5|confirmed',
-            'matricule' => 'nullable|string|unique:users,matricule,' . $user->id,
+            'email' => 'required|email|max:250|unique:users,email,'.$user->id,
+            'password' => 'nullable|string|min:8|confirmed',
+            'matricule' => 'nullable|string|unique:users,matricule,'.$user->id,
             'role' => 'required|in:admin,agent-de-security,superviseur',
+        ], [
+            'email.unique' => 'Cette adresse email est déjà utilisée.',
+            'matricule.unique' => 'Ce matricule est déjà utilisé.',
+            'password.min' => 'Le mot de passe doit contenir au moins 8 caractères.',
+            'password.confirmed' => 'La confirmation du mot de passe ne correspond pas.',
         ]);
 
-        if ($request->filled('password')) {
-            $validatedData['password'] = Hash::make($request->password);
-        } else {
+        // Empêcher un admin de se retirer son propre rôle par erreur
+        if ($user->role === 'admin') {
+            $validatedData['role'] = 'admin';
+        }
+
+        if (! $request->filled('password')) {
             unset($validatedData['password']);
         }
 
         $user->update($validatedData);
 
-        return redirect()->back()->with('success', 'Informations mises à jour avec succès !');
+        return redirect()->back()->with('success', 'Informations mises à jour avec succès.');
     }
 
-    public function destroy(Request $request, $id) 
+    public function destroy(Request $request, $id)
     {
-        $user = User::findOrFail($id); 
+        $user = User::findOrFail($id);
 
         if ($user->id === auth()->id()) {
-            return redirect()->back()->with('error', 'Vous ne pouvez pas vous supprimer vous-même !');
+            return redirect()->back()->with('error', 'Vous ne pouvez pas vous supprimer vous-même.');
         }
 
-        $user->forceDelete(); 
+        $user->forceDelete();
 
         return redirect()->back()->with('success', "L'utilisateur a bien été supprimé.");
     }
 
     public function disable(Request $request, $id)
     {
-        $user = User::findOrFail($id); 
+        $user = User::findOrFail($id);
+
         if ($user->id === auth()->id()) {
-            return redirect()->back()->with('error', 'Vous ne pouvez pas vous desactiver  vous-même !');
+            return redirect()->back()->with('error', 'Vous ne pouvez pas désactiver votre propre compte.');
         }
 
         $user->delete();
-        return redirect()->back()->with('success', "Compte desactivé avec success !.");
 
+        return redirect()->back()->with('success', 'Compte désactivé avec succès.');
     }
 
-
-    public function restore ($id)
+    public function restore($id)
     {
-        $user = User::withTrashed()->findOrFail($id); 
+        $user = User::withTrashed()->findOrFail($id);
         $user->restore();
-        
-        return redirect()->back()->with('success', "Compte réactivé avec success !.");
 
+        return redirect()->back()->with('success', 'Compte réactivé avec succès.');
     }
 }

@@ -3,10 +3,43 @@
 @section('title', 'Admin')
 
 @section('content')
-    <h1>Tableau de bord Admin</h1>
-    <a class=" bg-blue-900 rounded-xl p-2  text-white" href="{{route('admim.enregistrement')}}">Creer un compte utilisateur </a>
-    <a class=" bg-green-900 rounded-xl p-2  text-white" href="{{route('admin.users')}}">Liste des utilisateurs</a>
-    <a class=" bg-yellow-900 rounded-xl p-2  text-white" href="{{route('admin.settings.edit')}}">Parametres du compte</a>
-    <p>Bienvenue {{ Auth::user()->name }} !</p>
-    <p>Votre rôle : admin</p>
+<x-page-header title="Tableau de bord" :subtitle="'Bienvenue, '.Auth::user()->name" icon="home" color="brand" />
+
+<div class="mb-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+    <x-stat-card label="Superviseurs" :value="$stats['superviseurs']" icon="users" color="violet" />
+    <x-stat-card label="Visiteurs du jour" :value="$stats['visiteurs_jour']" icon="calendar-plus" color="sky" />
+    <x-stat-card label="En attente" :value="$stats['en_attente']" icon="clipboard" color="amber" />
+    <x-stat-card label="Validées" :value="$stats['validees']" icon="check-circle" color="emerald" />
+</div>
+
+<div class="grid gap-4 sm:grid-cols-2">
+    <x-dashboard-action
+        :href="route('admin.enregistrement')"
+        title="Créer un utilisateur"
+        description="Superviseur ou agent de sécurité"
+        icon="user-plus"
+        color="brand"
+    />
+    <x-dashboard-action
+        :href="route('admin.users')"
+        title="Liste des utilisateurs"
+        description="Gérer, modifier, désactiver"
+        icon="users"
+        color="violet"
+    />
+    <x-dashboard-action
+        :href="route('admin.settings.edit')"
+        title="Mon profil"
+        description="Paramètres du compte admin"
+        icon="cog"
+        color="sky"
+    />
+    <x-dashboard-action
+        :href="route('admin.rapports')"
+        title="Rapports"
+        description="Statistiques et exports"
+        icon="chart"
+        color="amber"
+    />
+</div>
 @endsection

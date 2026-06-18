@@ -3,9 +3,62 @@
 @section('title', 'Superviseur')
 
 @section('content')
-    <h1>Tableau de bord Superviseur</h1>
-    <p>Bienvenue {{ Auth::user()->name }} !</p>
-    <p>Votre rôle : superviseur</p>
-    <a class=" bg-yellow-900 rounded-xl p-2  text-white" href="{{route('superviseur.settings.edit')}}">Parametres du compte</a>
+<x-page-header title="Tableau de bord" :subtitle="'Bienvenue, '.Auth::user()->name" icon="home" color="brand" />
 
+<div class="mb-8 grid gap-4 sm:grid-cols-3">
+    <x-stat-card label="Visiteurs attendus" :value="$stats['attendus']" icon="calendar-plus" color="sky" />
+    <x-stat-card label="Visites validées" :value="$stats['validees']" icon="check-circle" color="emerald" />
+    <x-stat-card label="Visites refusées" :value="$stats['refusees']" icon="x-circle" color="red" />
+</div>
+
+<div class="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <x-dashboard-action
+        :href="route('superviseur.demandes.create')"
+        title="Nouvelle demande"
+        description="Pré-enregistrer un visiteur"
+        icon="calendar-plus"
+        color="brand"
+    />
+    <x-dashboard-action
+        :href="route('superviseur.demandes.index')"
+        title="Mes demandes"
+        description="Suivre l'état des visites"
+        icon="clipboard"
+        color="sky"
+    />
+    <x-dashboard-action
+        :href="route('superviseur.lettres.create')"
+        title="Envoyer une lettre"
+        description="Transmettre un document à la sécurité"
+        icon="mail"
+        color="violet"
+    />
+</div>
+
+@if ($notifications->count())
+    <div class="card">
+        <div class="mb-4 flex items-center gap-3">
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-50 text-amber-600">
+                <x-nav-icon name="bell" class="h-5 w-5" />
+            </div>
+            <h2 class="text-lg font-semibold text-slate-900">Notifications</h2>
+        </div>
+        <div class="space-y-3">
+            @foreach ($notifications as $notif)
+                <div class="flex flex-col gap-2 rounded-xl border border-slate-100 bg-slate-50 p-4 sm:flex-row sm:items-center sm:justify-between {{ !$notif->lu ? 'border-l-4 border-l-amber-500' : '' }}">
+                    <p class="text-sm text-slate-700">
+                        @if (!$notif->lu)<span class="mr-2 font-semibold text-amber-600">Nouveau</span>@endif
+                        {{ $notif->message }}
+                    </p>
+                    @if (!$notif->lu)
+                        <form method="POST" action="{{ route('superviseur.notifications.lu', $notif->id) }}">
+                            @csrf @method('PATCH')
+                            <button type="submit" class="btn-secondary text-xs">Marquer lu</button>
+                        </form>
+                    @endif
+                </div>
+            @endforeach
+        </div>
+    </div>
+@endif
 @endsection
