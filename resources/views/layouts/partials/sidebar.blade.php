@@ -21,7 +21,6 @@
             ['route' => 'agent.demandes.index', 'label' => 'Demandes', 'icon' => 'inbox', 'prefix' => 'agent-de-security/demandes'],
             ['route' => 'agent.visites.aujourdhui', 'label' => 'Visites du jour', 'icon' => 'calendar-plus', 'prefix' => 'agent-de-security/visites-aujourdhui'],
             ['route' => 'agent.archivages', 'label' => 'Archivages', 'icon' => 'clock', 'prefix' => 'agent-de-security/archivages'],
-            ['route' => 'agent.lettres.index', 'label' => 'Lettres', 'icon' => 'mail', 'prefix' => 'agent-de-security/lettres'],
         ],
         default => [],
     };

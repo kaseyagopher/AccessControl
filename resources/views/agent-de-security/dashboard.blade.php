@@ -5,10 +5,9 @@
 @section('content')
 <x-page-header title="Tableau de bord" :subtitle="'Bienvenue, '.Auth::user()->name" icon="home" color="brand" />
 
-<div class="mb-8 grid gap-4 sm:grid-cols-3">
+<div class="mb-8 grid gap-4 sm:grid-cols-2">
     <x-stat-card label="Visiteurs aujourd'hui" :value="$stats['aujourdhui']" icon="clock" color="sky" />
     <x-stat-card label="Demandes à traiter" :value="$stats['a_traiter']" icon="clipboard" color="amber" />
-    <x-stat-card label="Lettres à traiter" :value="$stats['lettres']" icon="inbox" color="violet" />
 </div>
 
 <div class="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -32,13 +31,6 @@
         description="Historique filtré des visites"
         icon="clock"
         color="amber"
-    />
-    <x-dashboard-action
-        :href="route('agent.lettres.index')"
-        title="Lettres reçues"
-        description="Traiter les correspondances"
-        icon="mail"
-        color="violet"
     />
 </div>
 

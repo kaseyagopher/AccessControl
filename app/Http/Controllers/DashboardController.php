@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Lettre;
 use App\Models\User;
 use App\Models\UserNotification;
 use App\Models\VisiteurRequest;
@@ -41,7 +40,6 @@ class DashboardController extends Controller
         $stats = [
             'aujourdhui' => VisiteurRequest::whereDate('date_prevue', today())->where('statut', 'valide')->count(),
             'a_traiter' => VisiteurRequest::whereIn('statut', ['en_attente', 'recu'])->count(),
-            'lettres' => Lettre::whereIn('statut', ['envoyee', 'recue'])->count(),
         ];
         $notifications = UserNotification::where('user_id', Auth::id())->latest()->take(10)->get();
 

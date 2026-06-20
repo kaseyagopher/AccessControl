@@ -7,6 +7,8 @@
 
 <x-archivages-panel
     :filter-route="route('admin.archivages')"
+    :demandes="$demandes"
+    :annees="$annees"
     :show-superviseur="true"
 />
 @endsection

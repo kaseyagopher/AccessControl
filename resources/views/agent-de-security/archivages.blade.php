@@ -7,6 +7,8 @@
 
 <x-archivages-panel
     :filter-route="route('agent.archivages')"
+    :demandes="$demandes"
+    :annees="$annees"
     :show-superviseur="true"
     detail-route="agent.demandes.show"
 />

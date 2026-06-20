@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\AgentDemandeController;
-use App\Http\Controllers\AgentLettreController;
 use App\Http\Controllers\ArchivageController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
@@ -64,9 +63,5 @@ Route::middleware(['auth', 'role:agent-de-security'])->prefix('agent-de-security
     Route::post('/demandes/{id}/arrivee', [AgentDemandeController::class, 'confirmerArrivee'])->name('agent.demandes.arrivee');
     Route::post('/demandes/{id}/sortie', [AgentDemandeController::class, 'enregistrerSortie'])->name('agent.demandes.sortie');
     Route::get('/archivages', [ArchivageController::class, 'agent'])->name('agent.archivages');
-    Route::get('/lettres', [AgentLettreController::class, 'index'])->name('agent.lettres.index');
-    Route::get('/lettres/{id}', [AgentLettreController::class, 'show'])->name('agent.lettres.show');
-    Route::post('/lettres/{id}/valider', [AgentLettreController::class, 'valider'])->name('agent.lettres.valider');
-    Route::post('/lettres/{id}/refuser', [AgentLettreController::class, 'refuser'])->name('agent.lettres.refuser');
     Route::patch('/notifications/{id}/lu', [DashboardController::class, 'marquerLu'])->name('agent.notifications.lu');
 });

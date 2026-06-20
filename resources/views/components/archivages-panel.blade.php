@@ -1,5 +1,7 @@
 @props([
     'filterRoute',
+    'demandes',
+    'annees',
     'showSuperviseur' => false,
     'detailRoute' => null,
 ])
