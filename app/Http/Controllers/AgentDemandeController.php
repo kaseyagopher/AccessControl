@@ -12,13 +12,13 @@ class AgentDemandeController extends Controller
 {
     public function index(Request $request)
     {
-        $query = VisiteurRequest::with(['visiteur', 'superviseur']);
+        $query = VisiteurRequest::with(['visiteur', 'visiteurs', 'superviseur']);
 
         if ($request->filled('nom')) {
-            $query->whereHas('visiteur', fn ($q) => $q->where('nom', 'like', '%'.$request->nom.'%'));
+            $query->whereHas('visiteurs', fn ($q) => $q->where('nom', 'like', '%'.$request->nom.'%'));
         }
         if ($request->filled('entreprise')) {
-            $query->whereHas('visiteur', fn ($q) => $q->where('entreprise', 'like', '%'.$request->entreprise.'%'));
+            $query->whereHas('visiteurs', fn ($q) => $q->where('entreprise', 'like', '%'.$request->entreprise.'%'));
         }
         if ($request->filled('date')) {
             $query->whereDate('date_prevue', $request->date);
@@ -34,7 +34,7 @@ class AgentDemandeController extends Controller
 
     public function show($id)
     {
-        $demande = VisiteurRequest::with(['visiteur', 'superviseur'])->findOrFail($id);
+        $demande = VisiteurRequest::with(['visiteur', 'visiteurs', 'superviseur'])->findOrFail($id);
 
         if ($demande->statut === 'en_attente') {
             $demande->update(['statut' => 'recu']);
@@ -99,7 +99,7 @@ class AgentDemandeController extends Controller
 
     public function visitesDuJour()
     {
-        $demandes = VisiteurRequest::with(['visiteur', 'superviseur'])
+        $demandes = VisiteurRequest::with(['visiteur', 'visiteurs', 'superviseur'])
             ->whereDate('date_prevue', today())
             ->where('statut', 'valide')
             ->get();

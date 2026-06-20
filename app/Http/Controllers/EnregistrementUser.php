@@ -16,7 +16,7 @@ class EnregistrementUser extends Controller
             'email' => 'required|email|max:250|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
             'matricule' => 'nullable|string|unique:users,matricule',
-            'role' => 'required|in:admin,agent-de-security,superviseur',
+            'role' => 'required|in:agent-de-security,superviseur',
         ], $this->messages());
 
         User::create($validatedData);

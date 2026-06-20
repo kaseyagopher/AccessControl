@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class VisiteurRequest extends Model
 {
@@ -28,6 +29,11 @@ class VisiteurRequest extends Model
     public function visiteur(): BelongsTo
     {
         return $this->belongsTo(Visiteur::class);
+    }
+
+    public function visiteurs(): BelongsToMany
+    {
+        return $this->belongsToMany(Visiteur::class, 'visiteur_request_visiteur');
     }
 
     public function superviseur(): BelongsTo

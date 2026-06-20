@@ -7,13 +7,10 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EnregistrementUser;
 use App\Http\Controllers\RapportController;
 use App\Http\Controllers\SuperviseurDemandeController;
-use App\Http\Controllers\SuperviseurLettreController;
 use App\Http\Controllers\updateInfos;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [AuthController::class, 'home']);
 
 Route::get('/setup-admin', [AuthController::class, 'createAdmin'])->name('setup.admin');
 
@@ -50,10 +47,7 @@ Route::middleware(['auth', 'role:superviseur'])->prefix('superviseur')->group(fu
     Route::get('/demandes', [SuperviseurDemandeController::class, 'index'])->name('superviseur.demandes.index');
     Route::get('/demandes/create', [SuperviseurDemandeController::class, 'create'])->name('superviseur.demandes.create');
     Route::post('/demandes', [SuperviseurDemandeController::class, 'store'])->name('superviseur.demandes.store');
-    Route::get('/historique', [SuperviseurDemandeController::class, 'historique'])->name('superviseur.historique');
-    Route::get('/lettres', [SuperviseurLettreController::class, 'index'])->name('superviseur.lettres.index');
-    Route::get('/lettres/create', [SuperviseurLettreController::class, 'create'])->name('superviseur.lettres.create');
-    Route::post('/lettres', [SuperviseurLettreController::class, 'store'])->name('superviseur.lettres.store');
+    Route::get('/archivages', [SuperviseurDemandeController::class, 'archivages'])->name('superviseur.archivages');
     Route::patch('/notifications/{id}/lu', [DashboardController::class, 'marquerLu'])->name('superviseur.notifications.lu');
 });
 

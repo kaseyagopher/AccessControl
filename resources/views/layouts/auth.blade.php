@@ -10,6 +10,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen antialiased">
+    @include('layouts.partials.loading-overlay')
     @yield('content')
 </body>
 </html>

@@ -10,6 +10,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen bg-[#f4f6fb]">
+@include('layouts.partials.loading-overlay')
 
 @auth
     {{-- Overlay mobile --}}

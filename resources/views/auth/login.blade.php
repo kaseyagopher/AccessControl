@@ -110,10 +110,6 @@
                         <a href="{{ route('setup.admin') }}" class="font-semibold text-brand-600 hover:text-brand-700">Créer l'administrateur</a>
                     </p>
                 @endif
-
-                <p class="mt-6 text-center text-sm text-slate-500">
-                    <a href="/" class="font-medium text-brand-600 hover:text-brand-700">← Retour à l'accueil</a>
-                </p>
             </div>
         </div>
     </div>

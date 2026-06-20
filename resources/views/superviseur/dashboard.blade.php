@@ -15,7 +15,7 @@
     <x-dashboard-action
         :href="route('superviseur.demandes.create')"
         title="Nouvelle demande"
-        description="Pré-enregistrer un visiteur"
+        description="Pré-enregistrer une ou plusieurs personnes"
         icon="calendar-plus"
         color="brand"
     />
@@ -27,11 +27,11 @@
         color="sky"
     />
     <x-dashboard-action
-        :href="route('superviseur.lettres.create')"
-        title="Envoyer une lettre"
-        description="Transmettre un document à la sécurité"
-        icon="mail"
-        color="violet"
+        :href="route('superviseur.archivages')"
+        title="Archivages"
+        description="Consulter l'historique filtré"
+        icon="clock"
+        color="amber"
     />
 </div>
 

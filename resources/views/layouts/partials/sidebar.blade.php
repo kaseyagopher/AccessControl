@@ -12,8 +12,7 @@
             ['route' => 'superviseur.dashboard', 'label' => 'Tableau de bord', 'icon' => 'home', 'prefix' => 'superviseur', 'exact' => true],
             ['route' => 'superviseur.demandes.create', 'label' => 'Nouvelle visite', 'icon' => 'calendar-plus', 'prefix' => 'superviseur/demandes/create'],
             ['route' => 'superviseur.demandes.index', 'label' => 'Mes demandes', 'icon' => 'clipboard', 'prefix' => 'superviseur/demandes', 'exclude' => 'superviseur/demandes/create'],
-            ['route' => 'superviseur.historique', 'label' => 'Historique', 'icon' => 'clock', 'prefix' => 'superviseur/historique'],
-            ['route' => 'superviseur.lettres.index', 'label' => 'Mes lettres', 'icon' => 'mail', 'prefix' => 'superviseur/lettres'],
+            ['route' => 'superviseur.archivages', 'label' => 'Archivages', 'icon' => 'clock', 'prefix' => 'superviseur/archivages'],
             ['route' => 'superviseur.settings.edit', 'label' => 'Mon profil', 'icon' => 'user', 'prefix' => 'superviseur/settings'],
         ],
         'agent-de-security' => [

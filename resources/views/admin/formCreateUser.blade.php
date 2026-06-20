@@ -3,7 +3,7 @@
 @section('title', 'Créer utilisateur')
 
 @section('content')
-<x-page-header title="Créer un utilisateur" subtitle="Administrateur, superviseur ou agent de sécurité" icon="user-plus" color="emerald" />
+<x-page-header title="Créer un utilisateur" subtitle="Superviseur ou agent de sécurité" icon="user-plus" color="emerald" />
 
 <div class="card max-w-2xl">
     <form action="{{ route('admin.enregistrement') }}" method="post" class="space-y-5">
@@ -20,7 +20,6 @@
                 <label for="role" class="mb-1.5 block text-sm font-medium text-slate-700">Rôle <span class="text-red-500">*</span></label>
                 <select id="role" name="role" required class="input-field @error('role') border-red-300 @enderror">
                     <option value="" disabled @selected(! old('role'))>Choisir un rôle</option>
-                    <option value="admin" @selected(old('role') === 'admin')>Administrateur</option>
                     <option value="agent-de-security" @selected(old('role') === 'agent-de-security')>Agent de sécurité</option>
                     <option value="superviseur" @selected(old('role') === 'superviseur')>Superviseur</option>
                 </select>

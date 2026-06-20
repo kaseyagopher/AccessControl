@@ -19,8 +19,12 @@
 
 <div class="space-y-4">
     @forelse ($demandes as $demande)
+        @php
+            $visiteurs = $demande->visiteurs->isNotEmpty() ? $demande->visiteurs : collect([$demande->visiteur]);
+            $principal = $visiteurs->first();
+        @endphp
         <x-list-card icon="clipboard" color="amber">
-            <h3 class="font-semibold text-slate-900">{{ $demande->visiteur->prenom }} {{ $demande->visiteur->nom }}</h3>
+            <h3 class="font-semibold text-slate-900">{{ $principal->prenom }} {{ $principal->nom }}@if($visiteurs->count() > 1) <span class="text-sm font-normal text-slate-500">(+{{ $visiteurs->count() - 1 }})</span>@endif</h3>
             <p class="text-sm text-slate-500">Superviseur : {{ $demande->superviseur->name }}</p>
             <p class="text-sm text-slate-600">{{ $demande->date_prevue->format('d/m/Y') }}</p>
             <x-slot:aside>
