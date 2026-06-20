@@ -6,6 +6,7 @@
             ['route' => 'admin.enregistrement', 'label' => 'Créer utilisateur', 'icon' => 'user-plus', 'prefix' => 'admin/enregistrement'],
             ['route' => 'admin.users', 'label' => 'Utilisateurs', 'icon' => 'users', 'prefix' => 'admin/users'],
             ['route' => 'admin.rapports', 'label' => 'Rapports', 'icon' => 'chart', 'prefix' => 'admin/rapports'],
+            ['route' => 'admin.archivages', 'label' => 'Archivages', 'icon' => 'clock', 'prefix' => 'admin/archivages'],
             ['route' => 'admin.settings.edit', 'label' => 'Mon profil', 'icon' => 'user', 'prefix' => 'admin/settings'],
         ],
         'superviseur' => [
@@ -19,6 +20,7 @@
             ['route' => 'agent-de-security.dashboard', 'label' => 'Tableau de bord', 'icon' => 'home', 'prefix' => 'agent-de-security', 'exact' => true],
             ['route' => 'agent.demandes.index', 'label' => 'Demandes', 'icon' => 'inbox', 'prefix' => 'agent-de-security/demandes'],
             ['route' => 'agent.visites.aujourdhui', 'label' => 'Visites du jour', 'icon' => 'calendar-plus', 'prefix' => 'agent-de-security/visites-aujourdhui'],
+            ['route' => 'agent.archivages', 'label' => 'Archivages', 'icon' => 'clock', 'prefix' => 'agent-de-security/archivages'],
             ['route' => 'agent.lettres.index', 'label' => 'Lettres', 'icon' => 'mail', 'prefix' => 'agent-de-security/lettres'],
         ],
         default => [],

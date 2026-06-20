@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AgentDemandeController;
 use App\Http\Controllers\AgentLettreController;
+use App\Http\Controllers\ArchivageController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EnregistrementUser;
@@ -37,6 +38,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::get('/rapports', [RapportController::class, 'index'])->name('admin.rapports');
     Route::get('/rapports/export-excel', [RapportController::class, 'exportExcel'])->name('admin.rapports.excel');
     Route::get('/rapports/export-pdf', [RapportController::class, 'exportPdf'])->name('admin.rapports.pdf');
+    Route::get('/archivages', [ArchivageController::class, 'admin'])->name('admin.archivages');
 });
 
 // --- SUPERVISEUR ---
@@ -47,7 +49,7 @@ Route::middleware(['auth', 'role:superviseur'])->prefix('superviseur')->group(fu
     Route::get('/demandes', [SuperviseurDemandeController::class, 'index'])->name('superviseur.demandes.index');
     Route::get('/demandes/create', [SuperviseurDemandeController::class, 'create'])->name('superviseur.demandes.create');
     Route::post('/demandes', [SuperviseurDemandeController::class, 'store'])->name('superviseur.demandes.store');
-    Route::get('/archivages', [SuperviseurDemandeController::class, 'archivages'])->name('superviseur.archivages');
+    Route::get('/archivages', [ArchivageController::class, 'superviseur'])->name('superviseur.archivages');
     Route::patch('/notifications/{id}/lu', [DashboardController::class, 'marquerLu'])->name('superviseur.notifications.lu');
 });
 
@@ -61,6 +63,7 @@ Route::middleware(['auth', 'role:agent-de-security'])->prefix('agent-de-security
     Route::get('/visites-aujourdhui', [AgentDemandeController::class, 'visitesDuJour'])->name('agent.visites.aujourdhui');
     Route::post('/demandes/{id}/arrivee', [AgentDemandeController::class, 'confirmerArrivee'])->name('agent.demandes.arrivee');
     Route::post('/demandes/{id}/sortie', [AgentDemandeController::class, 'enregistrerSortie'])->name('agent.demandes.sortie');
+    Route::get('/archivages', [ArchivageController::class, 'agent'])->name('agent.archivages');
     Route::get('/lettres', [AgentLettreController::class, 'index'])->name('agent.lettres.index');
     Route::get('/lettres/{id}', [AgentLettreController::class, 'show'])->name('agent.lettres.show');
     Route::post('/lettres/{id}/valider', [AgentLettreController::class, 'valider'])->name('agent.lettres.valider');

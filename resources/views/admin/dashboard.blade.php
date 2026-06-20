@@ -41,5 +41,12 @@
         icon="chart"
         color="amber"
     />
+    <x-dashboard-action
+        :href="route('admin.archivages')"
+        title="Archivages"
+        description="Historique de toutes les visites"
+        icon="clock"
+        color="emerald"
+    />
 </div>
 @endsection

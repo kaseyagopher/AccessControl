@@ -27,6 +27,13 @@
         color="emerald"
     />
     <x-dashboard-action
+        :href="route('agent.archivages')"
+        title="Archivages"
+        description="Historique filtré des visites"
+        icon="clock"
+        color="amber"
+    />
+    <x-dashboard-action
         :href="route('agent.lettres.index')"
         title="Lettres reçues"
         description="Traiter les correspondances"
