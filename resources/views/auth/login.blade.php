@@ -5,35 +5,30 @@
 @section('content')
 <div class="flex min-h-screen flex-col lg:flex-row">
 
-    {{-- Panneau illustration (gauche) --}}
+    {{-- Panneau illustration (gauche) — style MMG --}}
     <div class="relative hidden overflow-hidden lg:flex lg:w-[52%]">
-        <div class="absolute inset-0 bg-gradient-to-b from-brand-50 via-brand-100 to-brand-700"></div>
+        <div class="absolute inset-0 bg-mmg-charcoal"></div>
+        <div class="absolute inset-0 bg-gradient-to-br from-mmg-charcoal via-mmg-charcoal to-brand-800/80"></div>
         <div class="relative z-10 flex w-full flex-col items-center justify-center px-12 py-16">
-            <div class="mb-8 flex items-center gap-2">
-                <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-600 text-sm font-bold text-white shadow-lg shadow-brand-600/30">
-                    <x-nav-icon name="shield" class="h-5 w-5 text-white" />
-                </span>
-                <span class="text-xl font-bold tracking-tight text-brand-700">AccessControl</span>
+            <div class="mb-8 flex items-center justify-center">
+                <x-mmg-logo class="h-12 w-auto text-brand-500" />
             </div>
             <x-auth-illustration />
-            <p class="mt-10 max-w-sm text-center text-base font-medium leading-relaxed text-brand-700/80">
+            <p class="mt-10 max-w-sm text-center text-base font-medium leading-relaxed text-white/80">
                 Gérez les accès, les visites et la sécurité de votre établissement en toute simplicité.
             </p>
         </div>
     </div>
 
     {{-- Panneau formulaire (droite) --}}
-    <div class="flex flex-1 items-center justify-center bg-[#f4f6fb] px-5 py-10 sm:px-8">
+    <div class="flex flex-1 items-center justify-center bg-[#f5f5f5] px-5 py-10 sm:px-8">
         <div class="w-full max-w-[420px]">
 
-            <div class="mb-8 flex items-center justify-center gap-2 lg:hidden">
-                <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-600 text-sm font-bold text-white">
-                    <x-nav-icon name="shield" class="h-5 w-5 text-white" />
-                </span>
-                <span class="text-xl font-bold text-brand-700">AccessControl</span>
+            <div class="mb-8 flex items-center justify-center lg:hidden">
+                <x-mmg-logo class="h-10 w-auto text-brand-600" />
             </div>
 
-            <div class="rounded-[2rem] bg-white px-8 py-10 shadow-xl shadow-brand-700/10 sm:px-10 sm:py-12">
+            <div class="rounded-[2rem] bg-white px-8 py-10 shadow-xl shadow-mmg-charcoal/10 sm:px-10 sm:py-12">
                 <div class="mb-8">
                     <h1 class="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">Connexion</h1>
                     <p class="mt-2 text-sm text-slate-500">Accédez à votre espace de gestion</p>
@@ -51,19 +46,19 @@
                     @csrf
 
                     <div>
-                        <label for="email" class="mb-2 block text-sm font-medium text-slate-700">Adresse email</label>
+                        <label for="login" class="mb-2 block text-sm font-medium text-slate-700">Email ou nom d'utilisateur</label>
                         <input
-                            type="email"
-                            name="email"
-                            id="email"
-                            value="{{ old('email') }}"
+                            type="text"
+                            name="login"
+                            id="login"
+                            value="{{ old('login') }}"
                             required
-                            autocomplete="email"
-                            placeholder="vous@exemple.com"
-                            class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-800 shadow-sm transition placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/25 @error('email') border-red-300 @enderror"
+                            autocomplete="username"
+                            placeholder="admin ou vous@exemple.com"
+                            class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-800 shadow-sm transition placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/25 @error('login') border-brand-400 @enderror"
                         >
-                        @error('email')
-                            <p class="mt-1.5 text-sm text-red-600">{{ $message }}</p>
+                        @error('login')
+                            <p class="mt-1.5 text-sm text-brand-700">{{ $message }}</p>
                         @enderror
                     </div>
 
@@ -77,7 +72,7 @@
                                 required
                                 autocomplete="current-password"
                                 placeholder="••••••••"
-                                class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 pr-11 text-sm text-slate-800 shadow-sm transition placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/25 @error('password') border-red-300 @enderror"
+                                class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 pr-11 text-sm text-slate-800 shadow-sm transition placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/25 @error('password') border-brand-400 @enderror"
                             >
                             <button
                                 type="button"
@@ -95,11 +90,11 @@
                             </button>
                         </div>
                         @error('password')
-                            <p class="mt-1.5 text-sm text-red-600">{{ $message }}</p>
+                            <p class="mt-1.5 text-sm text-brand-700">{{ $message }}</p>
                         @enderror
                     </div>
 
-                    <button type="submit" class="btn-primary w-full rounded-2xl py-3.5 shadow-md shadow-brand-600/30">
+                    <button type="submit" class="btn-primary w-full rounded-2xl py-3.5 shadow-md shadow-brand-600/25">
                         Se connecter
                     </button>
                 </form>

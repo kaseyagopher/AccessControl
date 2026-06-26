@@ -12,13 +12,13 @@
             @if($showRole ?? false)
                 <div>
                     <label for="role" class="mb-1.5 block text-sm font-medium text-slate-700">Rôle</label>
-                    <select id="role" name="role" class="input-field @error('role') border-red-300 @enderror">
+                    <select id="role" name="role" class="input-field @error('role') border-brand-400 @enderror">
                         <option value="agent-de-security" @selected(old('role', $user->role) === 'agent-de-security')>Agent de sécurité</option>
                         <option value="superviseur" @selected(old('role', $user->role) === 'superviseur')>Superviseur</option>
                         <option value="admin" @selected(old('role', $user->role) === 'admin')>Administrateur</option>
                     </select>
                     @error('role')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        <p class="mt-1 text-sm text-brand-700">{{ $message }}</p>
                     @enderror
                 </div>
             @else

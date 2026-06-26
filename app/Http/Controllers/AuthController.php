@@ -29,31 +29,42 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required|email',
+            'login' => 'required|string',
             'password' => 'required',
         ], [
-            'email.required' => 'L\'adresse email est obligatoire.',
-            'email.email' => 'L\'adresse email n\'est pas valide.',
+            'login.required' => 'Le nom d\'utilisateur ou l\'email est obligatoire.',
             'password.required' => 'Le mot de passe est obligatoire.',
         ]);
 
-        $user = User::withTrashed()->where('email', $request->email)->first();
+        $login = $request->input('login');
+        $user = User::withTrashed()
+            ->where(function ($query) use ($login) {
+                $query->where('email', $login)->orWhere('username', $login);
+            })
+            ->first();
 
         if ($user && $user->trashed()) {
             return back()->withErrors([
-                'email' => 'Ce compte a été désactivé. Contactez un administrateur.',
-            ])->onlyInput('email');
+                'login' => 'Ce compte a été désactivé. Contactez un administrateur.',
+            ])->onlyInput('login');
         }
 
-        if (Auth::attempt($request->only('email', 'password'))) {
+        $credentials = ['password' => $request->password];
+        if ($user) {
+            $credentials['email'] = $user->email;
+        } else {
+            $credentials['email'] = $login;
+        }
+
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
             return $this->redirectByRole();
         }
 
         return back()->withErrors([
-            'email' => 'Email ou mot de passe incorrect.',
-        ])->onlyInput('email');
+            'login' => 'Identifiant ou mot de passe incorrect.',
+        ])->onlyInput('login');
     }
 
     public function createAdmin()
@@ -69,6 +80,7 @@ class AuthController extends Controller
         User::create([
             'name' => 'Administrateur',
             'email' => 'admin@accesscontrol.com',
+            'username' => 'admin',
             'password' => 'password',
             'role' => 'admin',
         ]);
@@ -76,6 +88,7 @@ class AuthController extends Controller
         return response(
             'Administrateur créé avec succès.'.PHP_EOL.
             'Email : admin@accesscontrol.com'.PHP_EOL.
+            'Nom d\'utilisateur : admin'.PHP_EOL.
             'Mot de passe : password'.PHP_EOL.
             'Connectez-vous sur /login',
             200

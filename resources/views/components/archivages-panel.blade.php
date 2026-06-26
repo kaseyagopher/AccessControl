@@ -47,7 +47,7 @@
             <label class="mb-1.5 block text-sm font-medium text-slate-700">Statut</label>
             <select name="statut" class="input-field">
                 <option value="">Tous les statuts</option>
-                @foreach (['en_attente', 'recu', 'valide', 'refuse', 'termine'] as $s)
+                @foreach (['brouillon', 'en_attente', 'recu', 'valide', 'refuse', 'termine'] as $s)
                     <option value="{{ $s }}" @selected(request('statut') === $s)>{{ str_replace('-', ' ', $s) }}</option>
                 @endforeach
             </select>
@@ -76,6 +76,9 @@
             @if ($showSuperviseur && $demande->superviseur)
                 <p class="mt-1 text-sm text-slate-500">Superviseur : {{ $demande->superviseur->name }}</p>
             @endif
+            @if ($demande->service)
+                <p class="mt-1 text-sm text-slate-500">{{ $demande->service->departement->nom ?? '' }} — {{ $demande->service->nom }}</p>
+            @endif
             <ul class="mt-3 space-y-2">
                 @foreach ($visiteurs as $v)
                     <li class="rounded-lg bg-slate-50 px-3 py-2 text-sm text-slate-700">
@@ -87,7 +90,7 @@
             <dl class="mt-3 grid gap-1 text-sm text-slate-600 sm:grid-cols-2">
                 <div>Créée le : {{ $demande->created_at->format('d/m/Y H:i') }}</div>
                 @if ($demande->date_validation)<div>Traitée le : {{ $demande->date_validation->format('d/m/Y H:i') }}</div>@endif
-                @if ($demande->heure_arrivee)<div class="text-emerald-600">Arrivée : {{ $demande->heure_arrivee->format('H:i') }}</div>@endif
+                @if ($demande->heure_arrivee)<div class="text-brand-700">Arrivée : {{ $demande->heure_arrivee->format('H:i') }}</div>@endif
                 @if ($demande->heure_sortie)<div>Sortie : {{ $demande->heure_sortie->format('H:i') }}</div>@endif
             </dl>
             @if ($detailRoute)

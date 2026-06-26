@@ -14,8 +14,10 @@ class EnregistrementUser extends Controller
             'lastName' => 'nullable|string|max:50',
             'firstName' => 'nullable|string|max:50',
             'email' => 'required|email|max:250|unique:users,email',
+            'username' => 'nullable|string|max:25|unique:users,username',
             'password' => 'required|string|min:8|confirmed',
             'matricule' => 'nullable|string|unique:users,matricule',
+            'fonction' => 'nullable|string|max:100',
             'role' => 'required|in:agent-de-security,superviseur',
         ], $this->messages());
 
@@ -40,8 +42,10 @@ class EnregistrementUser extends Controller
             'lastName' => 'nullable|string|max:50',
             'firstName' => 'nullable|string|max:50',
             'email' => 'required|email|max:250|unique:users,email,'.$user->id,
+            'username' => 'nullable|string|max:25|unique:users,username,'.$user->id,
             'password' => 'nullable|string|min:8|confirmed',
             'matricule' => 'nullable|string|unique:users,matricule,'.$user->id,
+            'fonction' => 'nullable|string|max:100',
             'role' => 'required|in:admin,agent-de-security,superviseur',
         ], $this->messages());
 
@@ -69,6 +73,7 @@ class EnregistrementUser extends Controller
     {
         return [
             'email.unique' => 'Cette adresse email est déjà enregistrée.',
+            'username.unique' => 'Ce nom d\'utilisateur est déjà enregistré.',
             'matricule.unique' => 'Ce matricule est déjà enregistré.',
             'password.min' => 'Le mot de passe doit contenir au moins 8 caractères.',
             'password.confirmed' => 'La confirmation du mot de passe ne correspond pas.',

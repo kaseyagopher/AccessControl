@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'AccessControl') — AccessControl</title>
+    <title>@yield('title', 'AccessControl') — MMG</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    @include('layouts.partials.favicon')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen bg-[#f4f6fb]">
+<body class="min-h-screen bg-[#f5f5f5]">
 @include('layouts.partials.loading-overlay')
 
 @auth
@@ -21,11 +22,8 @@
            class="fixed inset-y-0 left-0 z-50 flex w-64 -translate-x-full flex-col border-r border-slate-200/80 bg-white transition-transform duration-300 lg:translate-x-0">
 
         {{-- Logo --}}
-        <div class="flex h-16 items-center gap-3 border-b border-slate-100 px-5">
-            <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-600 text-sm font-bold text-white shadow-md shadow-brand-600/30">
-                <x-nav-icon name="shield" class="h-5 w-5 text-white" />
-            </span>
-            <span class="text-lg font-bold tracking-tight text-slate-900">AccessControl</span>
+        <div class="flex h-16 items-center border-b border-slate-100 px-5">
+            <x-mmg-logo class="h-10 w-auto text-brand-600" />
         </div>
 
         {{-- Navigation --}}
@@ -83,9 +81,8 @@
     {{-- Layout invité (login, accueil) --}}
     <header class="border-b border-slate-200/80 bg-white">
         <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
-            <a href="/" class="flex items-center gap-2 font-bold text-slate-900">
-                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-600 text-sm text-white">AC</span>
-                AccessControl
+            <a href="/" class="flex items-center text-slate-900">
+                <x-mmg-logo class="h-8 w-auto text-brand-600" />
             </a>
             <a href="{{ route('login') }}" class="btn-primary">Connexion</a>
         </div>

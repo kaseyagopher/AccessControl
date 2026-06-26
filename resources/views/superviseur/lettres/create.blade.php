@@ -12,9 +12,9 @@
         <x-form-field label="Commentaire" name="commentaire" type="textarea" :value="old('commentaire')" full :rows="4" />
         <div>
             <label for="fichier" class="mb-1.5 block text-sm font-medium text-slate-700">Fichier (PDF, Word, image)</label>
-            <input id="fichier" type="file" name="fichier" class="input-field @error('fichier') border-red-300 @enderror">
+            <input id="fichier" type="file" name="fichier" class="input-field @error('fichier') border-brand-400 @enderror">
             @error('fichier')
-                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                <p class="mt-1 text-sm text-brand-700">{{ $message }}</p>
             @enderror
         </div>
         <button type="submit" class="btn-primary">Envoyer</button>

@@ -3,16 +3,13 @@
 @section('title', 'Accueil')
 
 @section('content')
-<div class="min-h-screen bg-[#f4f6fb]">
+<div class="min-h-screen bg-[#f5f5f5]">
 
     {{-- Navigation --}}
     <header class="sticky top-0 z-50 border-b border-slate-200/60 bg-white/80 backdrop-blur-md">
         <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-            <a href="/" class="flex items-center gap-2.5 font-bold text-slate-900">
-                <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-600 shadow-md shadow-brand-600/25">
-                    <x-nav-icon name="shield" class="h-5 w-5 text-white" />
-                </span>
-                AccessControl
+            <a href="/" class="flex items-center text-slate-900">
+                <x-mmg-logo class="h-9 w-auto text-brand-600" />
             </a>
             @auth
                 <a href="{{
@@ -85,7 +82,7 @@
             </div>
 
             <div class="relative">
-                <div class="rounded-[2rem] bg-gradient-to-br from-brand-50 via-brand-100 to-brand-700 p-6 shadow-2xl shadow-brand-700/15 sm:p-8">
+                <div class="rounded-[2rem] bg-gradient-to-br from-mmg-charcoal via-mmg-charcoal to-brand-700 p-6 shadow-2xl shadow-mmg-charcoal/20 sm:p-8">
                     <x-auth-illustration />
                 </div>
             </div>
@@ -191,7 +188,7 @@
     {{-- CTA --}}
     @guest
         <section class="mx-4 mb-16 sm:mx-6">
-            <div class="mx-auto max-w-6xl overflow-hidden rounded-3xl bg-gradient-to-r from-brand-600 to-brand-700 px-8 py-12 text-center shadow-xl shadow-brand-700/25 sm:px-16">
+            <div class="mx-auto max-w-6xl overflow-hidden rounded-3xl bg-gradient-to-r from-mmg-charcoal to-brand-600 px-8 py-12 text-center shadow-xl shadow-mmg-charcoal/25 sm:px-16">
                 <h2 class="text-2xl font-bold text-white sm:text-3xl">Prêt à sécuriser vos accès ?</h2>
                 <p class="mx-auto mt-3 max-w-lg text-brand-100">Connectez-vous pour accéder à votre espace de travail.</p>
                 <a href="{{ route('login') }}" class="mt-8 inline-flex items-center justify-center rounded-xl bg-white px-8 py-3 text-sm font-semibold text-brand-700 shadow-sm transition hover:bg-brand-50">
@@ -205,10 +202,9 @@
     <footer class="border-t border-slate-200/60 bg-white py-8">
         <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:px-6">
             <div class="flex items-center gap-2 text-sm font-semibold text-slate-700">
-                <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-brand-600 text-xs text-white">AC</span>
-                AccessControl
+                <x-mmg-logo class="h-7 w-auto text-brand-600" />
             </div>
-            <p class="text-sm text-slate-500">© {{ date('Y') }} AccessControl — Gestion des accès et de la sécurité</p>
+            <p class="text-sm text-slate-500">© {{ date('Y') }} MMG — Gestion des accès et de la sécurité</p>
         </div>
     </footer>
 </div>

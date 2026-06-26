@@ -2,11 +2,11 @@
 
 @php
     $palette = match ($color) {
-        'violet' => 'bg-violet-50 text-violet-600 ring-violet-100',
-        'sky' => 'bg-sky-50 text-sky-600 ring-sky-100',
-        'amber' => 'bg-amber-50 text-amber-600 ring-amber-100',
-        'emerald' => 'bg-emerald-50 text-emerald-600 ring-emerald-100',
-        'red' => 'bg-red-50 text-red-600 ring-red-100',
+        'charcoal', 'violet' => 'bg-mmg-charcoal/10 text-mmg-charcoal ring-mmg-gray',
+        'sky' => 'bg-brand-50 text-brand-600 ring-brand-100',
+        'amber' => 'bg-brand-100 text-brand-700 ring-brand-200',
+        'emerald' => 'bg-brand-50 text-brand-700 ring-brand-100',
+        'red' => 'bg-brand-100 text-brand-800 ring-brand-200',
         default => 'bg-brand-50 text-brand-600 ring-brand-100',
     };
 @endphp

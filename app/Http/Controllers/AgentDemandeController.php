@@ -12,7 +12,8 @@ class AgentDemandeController extends Controller
 {
     public function index(Request $request)
     {
-        $query = VisiteurRequest::with(['visiteur', 'visiteurs', 'superviseur']);
+        $query = VisiteurRequest::with(['visiteur', 'visiteurs', 'superviseur', 'service.departement'])
+            ->where('statut', '!=', 'brouillon');
 
         if ($request->filled('nom')) {
             $query->whereHas('visiteurs', fn ($q) => $q->where('nom', 'like', '%'.$request->nom.'%'));
@@ -34,7 +35,7 @@ class AgentDemandeController extends Controller
 
     public function show($id)
     {
-        $demande = VisiteurRequest::with(['visiteur', 'visiteurs', 'superviseur'])->findOrFail($id);
+        $demande = VisiteurRequest::with(['visiteur', 'visiteurs', 'superviseur', 'service.departement'])->findOrFail($id);
 
         if ($demande->statut === 'en_attente') {
             $demande->update(['statut' => 'recu']);

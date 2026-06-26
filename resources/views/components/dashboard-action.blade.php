@@ -2,11 +2,11 @@
 
 @php
     $palette = match ($color) {
-        'violet' => 'bg-violet-50 text-violet-600 group-hover:bg-violet-600',
-        'sky' => 'bg-sky-50 text-sky-600 group-hover:bg-sky-600',
-        'amber' => 'bg-amber-50 text-amber-600 group-hover:bg-amber-600',
-        'emerald' => 'bg-emerald-50 text-emerald-600 group-hover:bg-emerald-600',
-        'red' => 'bg-red-50 text-red-600 group-hover:bg-red-600',
+        'charcoal', 'violet' => 'bg-mmg-charcoal/10 text-mmg-charcoal group-hover:bg-mmg-charcoal',
+        'sky' => 'bg-brand-50 text-brand-600 group-hover:bg-brand-600',
+        'amber' => 'bg-brand-100 text-brand-700 group-hover:bg-brand-700',
+        'emerald' => 'bg-brand-50 text-brand-700 group-hover:bg-brand-700',
+        'red' => 'bg-brand-100 text-brand-800 group-hover:bg-brand-800',
         default => 'bg-brand-50 text-brand-600 group-hover:bg-brand-600',
     };
 @endphp

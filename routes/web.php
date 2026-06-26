@@ -48,6 +48,12 @@ Route::middleware(['auth', 'role:superviseur'])->prefix('superviseur')->group(fu
     Route::get('/demandes', [SuperviseurDemandeController::class, 'index'])->name('superviseur.demandes.index');
     Route::get('/demandes/create', [SuperviseurDemandeController::class, 'create'])->name('superviseur.demandes.create');
     Route::post('/demandes', [SuperviseurDemandeController::class, 'store'])->name('superviseur.demandes.store');
+    Route::get('/demandes/{id}', [SuperviseurDemandeController::class, 'show'])->name('superviseur.demandes.show');
+    Route::get('/demandes/{id}/edit', [SuperviseurDemandeController::class, 'edit'])->name('superviseur.demandes.edit');
+    Route::put('/demandes/{id}', [SuperviseurDemandeController::class, 'update'])->name('superviseur.demandes.update');
+    Route::post('/demandes/{id}/envoyer', [SuperviseurDemandeController::class, 'envoyer'])->name('superviseur.demandes.envoyer');
+    Route::post('/demandes/{id}/observation-acces', [SuperviseurDemandeController::class, 'observationAcces'])->name('superviseur.demandes.observation-acces');
+    Route::post('/demandes/{id}/observation-sortie', [SuperviseurDemandeController::class, 'observationSortie'])->name('superviseur.demandes.observation-sortie');
     Route::get('/archivages', [ArchivageController::class, 'superviseur'])->name('superviseur.archivages');
     Route::patch('/notifications/{id}/lu', [DashboardController::class, 'marquerLu'])->name('superviseur.notifications.lu');
 });

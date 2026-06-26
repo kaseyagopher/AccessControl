@@ -25,12 +25,12 @@
     <x-section-card title="Par superviseur" icon="users" color="violet">
         <ul class="space-y-2">
             @forelse ($stats['par_superviseur'] as $row)
-                <li class="flex items-center justify-between rounded-xl bg-violet-50/60 px-3 py-2.5 text-sm">
+                <li class="flex items-center justify-between rounded-xl bg-mmg-charcoal/5 px-3 py-2.5 text-sm">
                     <span class="flex items-center gap-2 text-slate-700">
-                        <x-nav-icon name="user" class="h-4 w-4 text-violet-500" />
+                        <x-nav-icon name="user" class="h-4 w-4 text-mmg-charcoal" />
                         {{ $row->superviseur->name ?? 'N/A' }}
                     </span>
-                    <span class="rounded-lg bg-violet-100 px-2 py-0.5 font-semibold text-violet-700">{{ $row->total }}</span>
+                    <span class="rounded-lg bg-mmg-charcoal/10 px-2 py-0.5 font-semibold text-mmg-charcoal">{{ $row->total }}</span>
                 </li>
             @empty
                 <li class="text-slate-500">Aucune donnée</li>
@@ -40,12 +40,12 @@
     <x-section-card title="Entreprises fréquentes" icon="building" color="sky">
         <ul class="space-y-2">
             @forelse ($stats['entreprises'] as $row)
-                <li class="flex items-center justify-between rounded-xl bg-sky-50/60 px-3 py-2.5 text-sm">
+                <li class="flex items-center justify-between rounded-xl bg-brand-50/80 px-3 py-2.5 text-sm">
                     <span class="flex items-center gap-2 text-slate-700">
-                        <x-nav-icon name="building" class="h-4 w-4 text-sky-500" />
+                        <x-nav-icon name="building" class="h-4 w-4 text-brand-600" />
                         {{ $row->entreprise }}
                     </span>
-                    <span class="rounded-lg bg-sky-100 px-2 py-0.5 font-semibold text-sky-700">{{ $row->total }}</span>
+                    <span class="rounded-lg bg-brand-100 px-2 py-0.5 font-semibold text-brand-700">{{ $row->total }}</span>
                 </li>
             @empty
                 <li class="text-slate-500">Aucune donnée</li>

@@ -13,18 +13,20 @@
             <x-form-field label="Postnom" name="lastName" :value="old('lastName')" />
             <x-form-field label="Prénom" name="firstName" :value="old('firstName')" />
             <x-form-field label="Email" name="email" type="email" :value="old('email')" required />
+            <x-form-field label="Nom d'utilisateur" name="username" :value="old('username')" placeholder="Optionnel" />
+            <x-form-field label="Fonction" name="fonction" :value="old('fonction')" placeholder="Ex. Superviseur RH" />
             <x-form-field label="Mot de passe" name="password" type="password" required />
             <x-form-field label="Confirmer le mot de passe" name="password_confirmation" type="password" required />
             <x-form-field label="Matricule" name="matricule" :value="old('matricule')" placeholder="ACC-565X" />
             <div class="sm:col-span-2">
-                <label for="role" class="mb-1.5 block text-sm font-medium text-slate-700">Rôle <span class="text-red-500">*</span></label>
-                <select id="role" name="role" required class="input-field @error('role') border-red-300 @enderror">
+                <label for="role" class="mb-1.5 block text-sm font-medium text-slate-700">Rôle <span class="text-brand-600">*</span></label>
+                <select id="role" name="role" required class="input-field @error('role') border-brand-400 @enderror">
                     <option value="" disabled @selected(! old('role'))>Choisir un rôle</option>
                     <option value="agent-de-security" @selected(old('role') === 'agent-de-security')>Agent de sécurité</option>
                     <option value="superviseur" @selected(old('role') === 'superviseur')>Superviseur</option>
                 </select>
                 @error('role')
-                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    <p class="mt-1 text-sm text-brand-700">{{ $message }}</p>
                 @enderror
             </div>
         </div>

@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class VisiteurRequest extends Model
 {
-    public const STATUTS = ['en_attente', 'recu', 'valide', 'refuse', 'termine'];
+    public const STATUTS = ['brouillon', 'en_attente', 'recu', 'valide', 'refuse', 'termine'];
 
     protected $fillable = [
-        'visiteur_id', 'superviseur_id', 'motif', 'date_prevue', 'heure_prevue',
+        'visiteur_id', 'superviseur_id', 'service_id', 'motif', 'date_prevue', 'heure_prevue',
         'nombre_visiteurs', 'document_path', 'statut', 'commentaire_securite',
+        'observation_acces', 'observation_sortie',
         'valide_par', 'date_validation', 'heure_arrivee', 'heure_sortie',
     ];
 
@@ -36,9 +37,19 @@ class VisiteurRequest extends Model
         return $this->belongsToMany(Visiteur::class, 'visiteur_request_visiteur');
     }
 
+    public function service(): BelongsTo
+    {
+        return $this->belongsTo(Service::class);
+    }
+
     public function superviseur(): BelongsTo
     {
         return $this->belongsTo(User::class, 'superviseur_id');
+    }
+
+    public function isEditableBySuperviseur(): bool
+    {
+        return in_array($this->statut, ['brouillon', 'en_attente'], true);
     }
 
     public function validateur(): BelongsTo

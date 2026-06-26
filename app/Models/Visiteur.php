@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Visiteur extends Model
 {
     protected $fillable = [
-        'nom', 'prenom', 'telephone', 'entreprise', 'fonction', 'superviseur_id',
+        'nom', 'postnom', 'prenom', 'genre', 'telephone', 'entreprise', 'fonction', 'superviseur_id',
     ];
 
     public function superviseur(): BelongsTo

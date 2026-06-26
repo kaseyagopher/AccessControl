@@ -11,7 +11,8 @@ class ArchivageService
 {
     public static function query(Request $request, ?int $superviseurId = null): Builder
     {
-        $query = VisiteurRequest::with(['visiteur', 'visiteurs', 'superviseur']);
+        $query = VisiteurRequest::with(['visiteur', 'visiteurs', 'superviseur', 'service.departement'])
+            ->where('statut', '!=', 'brouillon');
 
         if ($superviseurId !== null) {
             $query->where('superviseur_id', $superviseurId);

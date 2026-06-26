@@ -29,7 +29,7 @@
                         <p class="mt-0.5 text-xs text-slate-400">Matricule : {{ $user->matricule }}</p>
                     @endif
                     @if ($user->trashed())
-                        <p class="mt-2 text-xs font-medium text-amber-600">Compte désactivé</p>
+                        <p class="mt-2 text-xs font-medium text-brand-700">Compte désactivé</p>
                     @endif
                 </div>
             </div>
