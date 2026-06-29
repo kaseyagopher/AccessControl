@@ -49,9 +49,13 @@
             @endif
             <div class="flex justify-between border-b border-slate-100 py-2"><dt class="text-slate-500">Motif</dt><dd class="max-w-[60%] text-right">{{ $demande->motif }}</dd></div>
             <div class="flex justify-between border-b border-slate-100 py-2"><dt class="text-slate-500">Date</dt><dd>{{ $demande->date_prevue->format('d/m/Y') }} {{ $demande->heure_prevue }}</dd></div>
-            @if ($demande->heure_arrivee)<div class="flex justify-between border-b border-slate-100 py-2"><dt class="text-slate-500">Heure d'entrée</dt><dd>{{ $demande->heure_arrivee->format('H:i') }}</dd></div>@endif
-            @if ($demande->heure_sortie)<div class="flex justify-between border-b border-slate-100 py-2"><dt class="text-slate-500">Heure de sortie</dt><dd>{{ $demande->heure_sortie->format('H:i') }}</dd></div>@endif
         </dl>
+        @if ($demande->validateur || $demande->heure_arrivee || $demande->heure_sortie)
+            <div class="mt-4 border-t border-slate-100 pt-4">
+                <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">Traçabilité sécurité</p>
+                <x-vnf-tracabilite-securite :demande="$demande" compact />
+            </div>
+        @endif
         @if ($demande->commentaire_securite)
             <p class="mt-4 rounded-lg bg-amber-50 px-3 py-2 text-sm text-amber-900"><strong>Sécurité :</strong> {{ $demande->commentaire_securite }}</p>
         @endif

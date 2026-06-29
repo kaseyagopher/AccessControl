@@ -13,7 +13,7 @@
         @endphp
         <x-list-card icon="clock" :color="$demande->estVisiteAVenir() ? 'amber' : 'emerald'">
             <div class="flex flex-wrap items-center gap-2">
-                <h3 class="font-semibold text-slate-900">{{ $principal->prenom }} {{ $principal->postnom }} {{ $principal->nom }}</h3>
+                <h3 class="font-semibold text-slate-900">{{ $principal->nomComplet() }}</h3>
                 <x-badge :status="$demande->statut" />
                 @if ($demande->estVisiteAVenir())
                     <span class="inline-flex rounded-full bg-amber-100 px-2.5 py-1 text-xs font-semibold text-amber-800">À venir</span>
@@ -29,11 +29,23 @@
             <div class="mt-2 flex flex-wrap gap-3 text-sm">
                 <span class="{{ $demande->heure_arrivee ? 'font-medium text-emerald-700' : 'text-slate-400' }}">
                     Entrée : {{ $demande->heure_arrivee ? $demande->heure_arrivee->format('d/m/Y H:i') : '—' }}
+                    @if ($demande->agentArrivee)
+                        <span class="font-normal text-slate-500">({{ $demande->agentArrivee->nomComplet() }})</span>
+                    @endif
                 </span>
                 <span class="{{ $demande->heure_sortie ? 'font-medium text-slate-700' : 'text-slate-400' }}">
                     Sortie : {{ $demande->heure_sortie ? $demande->heure_sortie->format('d/m/Y H:i') : '—' }}
+                    @if ($demande->agentSortie)
+                        <span class="font-normal text-slate-500">({{ $demande->agentSortie->nomComplet() }})</span>
+                    @endif
                 </span>
             </div>
+            @if ($demande->validateur && $demande->date_validation)
+                <p class="mt-2 text-xs text-slate-500">
+                    VNF {{ $demande->statut === 'refuse' ? 'refusée' : 'validée' }} par {{ $demande->validateur->nomComplet() }}
+                    le {{ $demande->date_validation->format('d/m/Y H:i') }}
+                </p>
+            @endif
             <x-slot:aside>
                 <div class="flex flex-col gap-2 sm:items-end">
                     @if ($demande->peutEnregistrerAcces())

@@ -14,7 +14,7 @@ class SuperviseurDemandeController extends Controller
 {
     public function index(Request $request)
     {
-        $query = VisiteurRequest::with(['visiteur', 'visiteurs', 'service.departement'])
+        $query = VisiteurRequest::with(['visiteur', 'visiteurs', 'superviseur', 'service.departement', ...VisiteurRequest::RELATIONS_AUDIT])
             ->where('superviseur_id', Auth::id());
 
         if ($request->filled('nom')) {
@@ -62,7 +62,7 @@ class SuperviseurDemandeController extends Controller
     public function show($id)
     {
         $demande = $this->findOwnDemande($id);
-        $demande->load(['visiteur', 'visiteurs', 'service.departement']);
+        $demande->load(['visiteur', 'visiteurs', 'service.departement', ...VisiteurRequest::RELATIONS_AUDIT]);
 
         return view('superviseur.demandes.show', compact('demande'));
     }

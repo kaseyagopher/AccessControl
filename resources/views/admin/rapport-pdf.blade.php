@@ -28,7 +28,7 @@
         <tbody>
             @foreach ($demandes as $d)
                 <tr>
-                    <td>{{ $d->visiteur->prenom }} {{ $d->visiteur->nom }}</td>
+                    <td>{{ $d->visiteur->nomComplet() }}</td>
                     <td>{{ $d->visiteur->entreprise }}</td>
                     <td>{{ $d->superviseur->name }}</td>
                     <td>{{ $d->date_prevue->format('d/m/Y') }}</td>

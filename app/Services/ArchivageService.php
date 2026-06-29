@@ -11,7 +11,7 @@ class ArchivageService
 {
     public static function query(Request $request, ?int $superviseurId = null): Builder
     {
-        $query = VisiteurRequest::with(['visiteur', 'visiteurs', 'superviseur', 'service.departement'])
+        $query = VisiteurRequest::with(['visiteur', 'visiteurs', 'superviseur', 'service.departement', ...VisiteurRequest::RELATIONS_AUDIT])
             ->where('statut', '!=', 'brouillon');
 
         if ($superviseurId !== null) {
@@ -20,6 +20,9 @@ class ArchivageService
 
         if ($request->filled('nom')) {
             $query->whereHas('visiteurs', fn ($q) => $q->where('nom', 'like', '%'.$request->nom.'%'));
+        }
+        if ($request->filled('postnom')) {
+            $query->whereHas('visiteurs', fn ($q) => $q->where('postnom', 'like', '%'.$request->postnom.'%'));
         }
         if ($request->filled('prenom')) {
             $query->whereHas('visiteurs', fn ($q) => $q->where('prenom', 'like', '%'.$request->prenom.'%'));

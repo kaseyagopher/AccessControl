@@ -12,7 +12,7 @@ class AgentDemandeController extends Controller
 {
     public function index(Request $request)
     {
-        $query = VisiteurRequest::with(['visiteur', 'visiteurs', 'superviseur', 'service.departement'])
+        $query = VisiteurRequest::with(['visiteur', 'visiteurs', 'superviseur', 'service.departement', ...VisiteurRequest::RELATIONS_AUDIT])
             ->where('statut', '!=', 'brouillon');
 
         if ($request->filled('nom')) {
@@ -35,7 +35,7 @@ class AgentDemandeController extends Controller
 
     public function show($id)
     {
-        $demande = VisiteurRequest::with(['visiteur', 'visiteurs', 'superviseur', 'service.departement'])->findOrFail($id);
+        $demande = VisiteurRequest::with(['visiteur', 'visiteurs', 'superviseur', 'service.departement', ...VisiteurRequest::RELATIONS_AUDIT])->findOrFail($id);
 
         if ($demande->statut === 'en_attente') {
             $demande->update(['statut' => 'recu']);
@@ -100,7 +100,7 @@ class AgentDemandeController extends Controller
 
     public function visitesDuJour()
     {
-        $demandes = VisiteurRequest::with(['visiteur', 'visiteurs', 'superviseur', 'service.departement'])
+        $demandes = VisiteurRequest::with(['visiteur', 'visiteurs', 'superviseur', 'service.departement', ...VisiteurRequest::RELATIONS_AUDIT])
             ->pourAccesSortie()
             ->orderBy('date_prevue')
             ->orderBy('heure_prevue')
@@ -127,6 +127,7 @@ class AgentDemandeController extends Controller
 
         $demande->update([
             'heure_arrivee' => now(),
+            'arrivee_par' => Auth::id(),
         ]);
 
         $visiteur = $demande->visiteurPrincipal();
@@ -158,6 +159,7 @@ class AgentDemandeController extends Controller
 
         $demande->update([
             'heure_sortie' => now(),
+            'sortie_par' => Auth::id(),
             'statut' => 'termine',
         ]);
 

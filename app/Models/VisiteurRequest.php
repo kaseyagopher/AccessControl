@@ -14,8 +14,10 @@ class VisiteurRequest extends Model
         'visiteur_id', 'superviseur_id', 'service_id', 'motif', 'date_prevue', 'heure_prevue',
         'nombre_visiteurs', 'document_path', 'statut', 'commentaire_securite',
         'observation_acces', 'observation_sortie',
-        'valide_par', 'date_validation', 'heure_arrivee', 'heure_sortie',
+        'valide_par', 'date_validation', 'heure_arrivee', 'arrivee_par', 'heure_sortie', 'sortie_par',
     ];
+
+    public const RELATIONS_AUDIT = ['validateur', 'agentArrivee', 'agentSortie'];
 
     protected function casts(): array
     {
@@ -93,5 +95,15 @@ class VisiteurRequest extends Model
     public function validateur(): BelongsTo
     {
         return $this->belongsTo(User::class, 'valide_par');
+    }
+
+    public function agentArrivee(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'arrivee_par');
+    }
+
+    public function agentSortie(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'sortie_par');
     }
 }

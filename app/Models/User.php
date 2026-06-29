@@ -31,4 +31,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function nomComplet(): string
+    {
+        return implode(' ', array_filter([$this->firstName, $this->lastName, $this->name]));
+    }
 }

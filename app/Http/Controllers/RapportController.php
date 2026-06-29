@@ -56,7 +56,7 @@ class RapportController extends Controller
             fputcsv($file, ['Visiteur', 'Entreprise', 'Superviseur', 'Date', 'Statut', 'Motif']);
             foreach ($demandes as $d) {
                 fputcsv($file, [
-                    $d->visiteur->prenom.' '.$d->visiteur->nom,
+                    $d->visiteur->nomComplet(),
                     $d->visiteur->entreprise,
                     $d->superviseur->name,
                     $d->date_prevue->format('Y-m-d'),

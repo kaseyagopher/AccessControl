@@ -13,6 +13,7 @@ class DashboardController extends Controller
     {
         $stats = [
             'superviseurs' => User::where('role', 'superviseur')->count(),
+            'agents' => User::where('role', 'agent-de-security')->count(),
             'visiteurs_jour' => VisiteurRequest::whereDate('date_prevue', today())->count(),
             'en_attente' => VisiteurRequest::where('statut', 'en_attente')->count(),
             'validees' => VisiteurRequest::where('statut', 'valide')->count(),

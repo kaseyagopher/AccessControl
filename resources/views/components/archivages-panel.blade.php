@@ -13,6 +13,10 @@
             <input type="text" name="nom" value="{{ request('nom') }}" placeholder="Nom du visiteur" class="input-field">
         </div>
         <div>
+            <label class="mb-1.5 block text-sm font-medium text-slate-700">Postnom</label>
+            <input type="text" name="postnom" value="{{ request('postnom') }}" placeholder="Postnom" class="input-field">
+        </div>
+        <div>
             <label class="mb-1.5 block text-sm font-medium text-slate-700">Prénom</label>
             <input type="text" name="prenom" value="{{ request('prenom') }}" placeholder="Prénom" class="input-field">
         </div>
@@ -82,16 +86,31 @@
             <ul class="mt-3 space-y-2">
                 @foreach ($visiteurs as $v)
                     <li class="rounded-lg bg-slate-50 px-3 py-2 text-sm text-slate-700">
-                        <span class="font-medium">{{ $v->prenom }} {{ $v->nom }}</span>
+                        <span class="font-medium">{{ $v->nomComplet() }}</span>
                         <span class="text-slate-500"> — {{ $v->entreprise }}</span>
                     </li>
                 @endforeach
             </ul>
             <dl class="mt-3 grid gap-1 text-sm text-slate-600 sm:grid-cols-2">
                 <div>Créée le : {{ $demande->created_at->format('d/m/Y H:i') }}</div>
-                @if ($demande->date_validation)<div>Traitée le : {{ $demande->date_validation->format('d/m/Y H:i') }}</div>@endif
-                @if ($demande->heure_arrivee)<div class="text-emerald-700">Arrivée : {{ $demande->heure_arrivee->format('H:i') }}</div>@endif
-                @if ($demande->heure_sortie)<div>Sortie : {{ $demande->heure_sortie->format('H:i') }}</div>@endif
+                @if ($demande->validateur && $demande->date_validation)
+                    <div>
+                        {{ $demande->statut === 'refuse' ? 'VNF Refusée' : 'VNF Validée' }} par {{ $demande->validateur->nomComplet() }}
+                        le {{ $demande->date_validation->format('d/m/Y H:i') }}
+                    </div>
+                @endif
+                @if ($demande->heure_arrivee)
+                    <div class="text-emerald-700">
+                        Entrée : {{ $demande->heure_arrivee->format('d/m/Y H:i') }}
+                        @if ($demande->agentArrivee) — Par agent de sécurité : {{ $demande->agentArrivee->nomComplet() }} @endif
+                    </div>
+                @endif
+                @if ($demande->heure_sortie)
+                    <div>
+                        Sortie : {{ $demande->heure_sortie->format('d/m/Y H:i') }}
+                        @if ($demande->agentSortie) — Par agent de sécurité : {{ $demande->agentSortie->nomComplet() }} @endif
+                    </div>
+                @endif
             </dl>
             @if ($detailRoute)
                 <x-slot:aside>

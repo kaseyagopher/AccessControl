@@ -45,6 +45,12 @@
             <div class="flex justify-between border-b border-slate-100 py-2"><dt class="text-slate-500">Date</dt><dd>{{ $demande->date_prevue->format('d/m/Y') }} {{ $demande->heure_prevue }}</dd></div>
             <div class="flex justify-between py-2"><dt class="text-slate-500">Nombre de visiteurs</dt><dd>{{ $demande->nombre_visiteurs }}</dd></div>
         </dl>
+        @if ($demande->validateur || $demande->heure_arrivee || $demande->heure_sortie)
+            <div class="mt-4 border-t border-slate-100 pt-4">
+                <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">Traçabilité sécurité</p>
+                <x-vnf-tracabilite-securite :demande="$demande" compact />
+            </div>
+        @endif
         @if ($demande->document_path)
             <a href="{{ asset('storage/'.$demande->document_path) }}" target="_blank" class="btn-secondary mt-4 inline-flex items-center gap-2 text-sm">
                 <x-nav-icon name="download" class="h-4 w-4" /> Télécharger le document

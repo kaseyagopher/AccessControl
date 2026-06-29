@@ -27,5 +27,10 @@ class Visiteur extends Model
     {
         return $this->belongsToMany(VisiteurRequest::class, 'visiteur_request_visiteur');
     }
+
+    public function nomComplet(): string
+    {
+        return implode(' ', array_filter([$this->prenom, $this->postnom, $this->nom]));
+    }
 }
 

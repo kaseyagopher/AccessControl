@@ -24,7 +24,7 @@
             $principal = $visiteurs->first();
         @endphp
         <x-list-card icon="clipboard" color="amber">
-            <h3 class="font-semibold text-slate-900">{{ $principal->prenom }} {{ $principal->nom }}@if($visiteurs->count() > 1) <span class="text-sm font-normal text-slate-500">(+{{ $visiteurs->count() - 1 }})</span>@endif</h3>
+            <h3 class="font-semibold text-slate-900">{{ $principal->nomComplet() }}@if($visiteurs->count() > 1) <span class="text-sm font-normal text-slate-500">(+{{ $visiteurs->count() - 1 }})</span>@endif</h3>
             <p class="text-sm text-slate-500">Superviseur : {{ $demande->superviseur->name }}@if($demande->service) — {{ $demande->service->nom }}@endif</p>
             <p class="text-sm text-slate-600">{{ $demande->date_prevue->format('d/m/Y') }}</p>
             <x-slot:aside>

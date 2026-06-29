@@ -42,7 +42,7 @@
             @endif
             <ul class="mt-2 space-y-1">
                 @foreach ($visiteurs as $v)
-                    <li class="text-sm text-slate-600">{{ $v->prenom }} {{ $v->postnom }} {{ $v->nom }} ({{ $v->entreprise }})</li>
+                    <li class="text-sm text-slate-600">{{ $v->nomComplet() }} ({{ $v->entreprise }})</li>
                 @endforeach
             </ul>
             <p class="mt-2 text-sm text-slate-600">{{ Str::limit($demande->motif, 80) }}</p>
