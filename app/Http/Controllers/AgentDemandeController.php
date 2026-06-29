@@ -100,9 +100,10 @@ class AgentDemandeController extends Controller
 
     public function visitesDuJour()
     {
-        $demandes = VisiteurRequest::with(['visiteur', 'visiteurs', 'superviseur'])
-            ->whereDate('date_prevue', today())
-            ->where('statut', 'valide')
+        $demandes = VisiteurRequest::with(['visiteur', 'visiteurs', 'superviseur', 'service.departement'])
+            ->pourAccesSortie()
+            ->orderBy('date_prevue')
+            ->orderBy('heure_prevue')
             ->get();
 
         return view('agent-de-security.demandes.aujourdhui', compact('demandes'));
@@ -116,6 +117,10 @@ class AgentDemandeController extends Controller
             return redirect()->back()->with('error', 'Seules les visites validées peuvent être enregistrées.');
         }
 
+        if ($demande->date_prevue->isAfter(today())) {
+            return redirect()->back()->with('error', 'Cette visite est prévue pour le '.$demande->date_prevue->format('d/m/Y').'.');
+        }
+
         if ($demande->heure_arrivee) {
             return redirect()->back()->with('error', 'L\'arrivée a déjà été enregistrée.');
         }
@@ -124,13 +129,15 @@ class AgentDemandeController extends Controller
             'heure_arrivee' => now(),
         ]);
 
+        $visiteur = $demande->visiteurPrincipal();
+
         NotificationService::notifierSuperviseur(
             $demande->superviseur_id,
-            'Le visiteur '.$demande->visiteur->prenom.' '.$demande->visiteur->nom.' est arrivé.',
+            'Le visiteur '.$visiteur->prenom.' '.$visiteur->nom.' est arrivé.',
             'visiteur_arrive'
         );
 
-        return redirect()->back()->with('success', 'Arrivée enregistrée.');
+        return redirect()->back()->with('success', 'Entrée validée avec succès.');
     }
 
     public function enregistrerSortie($id)
@@ -145,11 +152,15 @@ class AgentDemandeController extends Controller
             return redirect()->back()->with('error', 'La sortie a déjà été enregistrée.');
         }
 
+        if (! in_array($demande->statut, ['valide', 'termine'], true)) {
+            return redirect()->back()->with('error', 'Cette visite ne peut pas être clôturée.');
+        }
+
         $demande->update([
             'heure_sortie' => now(),
             'statut' => 'termine',
         ]);
 
-        return redirect()->back()->with('success', 'Sortie enregistrée. Visite terminée.');
+        return redirect()->back()->with('success', 'Sortie validée avec succès. Visite terminée.');
     }
 }

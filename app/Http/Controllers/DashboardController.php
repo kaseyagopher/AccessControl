@@ -38,7 +38,11 @@ class DashboardController extends Controller
     public function agent()
     {
         $stats = [
-            'aujourdhui' => VisiteurRequest::whereDate('date_prevue', today())->where('statut', 'valide')->count(),
+            'aujourdhui' => VisiteurRequest::where(function ($q) {
+                $q->where('statut', 'valide')->whereDate('date_prevue', today());
+            })->orWhere(function ($q) {
+                $q->where('statut', 'termine')->whereDate('date_prevue', today());
+            })->count(),
             'a_traiter' => VisiteurRequest::whereIn('statut', ['en_attente', 'recu'])->count(),
         ];
         $notifications = UserNotification::where('user_id', Auth::id())->latest()->take(10)->get();

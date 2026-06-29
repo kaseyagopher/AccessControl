@@ -27,9 +27,47 @@ class VisiteurRequest extends Model
         ];
     }
 
+    public function scopePourAccesSortie($query)
+    {
+        return $query->where(function ($q) {
+            $q->where('statut', 'valide')
+                ->orWhere(function ($q2) {
+                    $q2->where('statut', 'termine')->whereDate('date_prevue', today());
+                });
+        });
+    }
+
+    public function estVisiteAVenir(): bool
+    {
+        return $this->statut === 'valide' && $this->date_prevue->isAfter(today());
+    }
+
+    public function peutEnregistrerAcces(): bool
+    {
+        return $this->statut === 'valide'
+            && ! $this->heure_arrivee
+            && $this->date_prevue->lte(today());
+    }
+
+    public function peutEnregistrerSortie(): bool
+    {
+        return $this->heure_arrivee
+            && ! $this->heure_sortie
+            && in_array($this->statut, ['valide', 'termine'], true);
+    }
+
     public function visiteur(): BelongsTo
     {
         return $this->belongsTo(Visiteur::class);
+    }
+
+    public function visiteurPrincipal(): ?Visiteur
+    {
+        if ($this->relationLoaded('visiteurs') && $this->visiteurs->isNotEmpty()) {
+            return $this->visiteurs->first();
+        }
+
+        return $this->visiteur;
     }
 
     public function visiteurs(): BelongsToMany
