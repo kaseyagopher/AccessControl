@@ -10,9 +10,26 @@ class DepartementServiceSeeder extends Seeder
     public function run(): void
     {
         $data = [
-            'Direction Générale' => ['Secrétariat', 'Communication'],
-            'Ressources Humaines' => ['Recrutement', 'Formation'],
-            'Informatique' => ['Support technique', 'Développement'],
+            'Sous-traitance' => [
+                'ITM MMG',
+                'Mexco',
+                'SSL',
+                'IFS',
+                'GTI (Godwin trading for Investment sarl)',
+                'SDI',
+                'Gymtec',
+            ],
+            'Département MMG' => [
+                'Sécurité',
+                'IT',
+                'RH',
+                'Social',
+                'Safety',
+                'Mine',
+                'Logistique',
+                'Store',
+                'Usine',
+            ],
         ];
 
         foreach ($data as $departementNom => $services) {
