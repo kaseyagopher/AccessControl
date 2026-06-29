@@ -2,11 +2,12 @@
 
 @php
     $palette = match ($color) {
-        'charcoal', 'violet' => ['icon' => 'bg-mmg-charcoal/10 text-mmg-charcoal', 'value' => 'text-mmg-charcoal'],
-        'sky' => ['icon' => 'bg-brand-50 text-brand-600', 'value' => 'text-brand-600'],
-        'amber' => ['icon' => 'bg-brand-100 text-brand-700', 'value' => 'text-brand-700'],
-        'emerald' => ['icon' => 'bg-brand-50 text-brand-700', 'value' => 'text-brand-700'],
-        'red', 'orange' => ['icon' => 'bg-brand-100 text-brand-800', 'value' => 'text-brand-800'],
+        'violet' => ['icon' => 'bg-violet-50 text-violet-600', 'value' => 'text-violet-600'],
+        'sky' => ['icon' => 'bg-sky-50 text-sky-600', 'value' => 'text-sky-600'],
+        'amber' => ['icon' => 'bg-amber-50 text-amber-600', 'value' => 'text-amber-600'],
+        'emerald' => ['icon' => 'bg-emerald-50 text-emerald-600', 'value' => 'text-emerald-600'],
+        'red', 'orange' => ['icon' => 'bg-red-50 text-red-600', 'value' => 'text-red-600'],
+        'charcoal' => ['icon' => 'bg-mmg-charcoal/10 text-mmg-charcoal', 'value' => 'text-mmg-charcoal'],
         default => ['icon' => 'bg-brand-50 text-brand-600', 'value' => 'text-brand-600'],
     };
 @endphp

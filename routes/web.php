@@ -43,8 +43,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 // --- SUPERVISEUR ---
 Route::middleware(['auth', 'role:superviseur'])->prefix('superviseur')->group(function () {
     Route::get('/', [DashboardController::class, 'superviseur'])->name('superviseur.dashboard');
-    Route::get('/settings', [updateInfos::class, 'editSuperviseurInfos'])->name('superviseur.settings.edit');
-    Route::put('/settings', [updateInfos::class, 'updateInfos'])->name('superviseur.settings.update');
     Route::get('/demandes', [SuperviseurDemandeController::class, 'index'])->name('superviseur.demandes.index');
     Route::get('/demandes/create', [SuperviseurDemandeController::class, 'create'])->name('superviseur.demandes.create');
     Route::post('/demandes', [SuperviseurDemandeController::class, 'store'])->name('superviseur.demandes.store');

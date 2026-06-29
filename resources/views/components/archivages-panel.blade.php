@@ -90,7 +90,7 @@
             <dl class="mt-3 grid gap-1 text-sm text-slate-600 sm:grid-cols-2">
                 <div>Créée le : {{ $demande->created_at->format('d/m/Y H:i') }}</div>
                 @if ($demande->date_validation)<div>Traitée le : {{ $demande->date_validation->format('d/m/Y H:i') }}</div>@endif
-                @if ($demande->heure_arrivee)<div class="text-brand-700">Arrivée : {{ $demande->heure_arrivee->format('H:i') }}</div>@endif
+                @if ($demande->heure_arrivee)<div class="text-emerald-700">Arrivée : {{ $demande->heure_arrivee->format('H:i') }}</div>@endif
                 @if ($demande->heure_sortie)<div>Sortie : {{ $demande->heure_sortie->format('H:i') }}</div>@endif
             </dl>
             @if ($detailRoute)

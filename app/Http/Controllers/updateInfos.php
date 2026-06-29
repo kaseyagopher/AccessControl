@@ -13,11 +13,6 @@ class updateInfos extends Controller
         return view('admin.editProfil', ['user' => Auth::user()]);
     }
 
-    public function editSuperviseurInfos()
-    {
-        return view('superviseur.editProfil', ['user' => Auth::user()]);
-    }
-
     public function updateAdminInfos(Request $request)
     {
         return $this->updateInfos($request);
@@ -26,6 +21,10 @@ class updateInfos extends Controller
     public function updateInfos(Request $request)
     {
         $user = Auth::user();
+
+        if ($user->role !== 'admin') {
+            abort(403, 'Vous n\'êtes pas autorisé à modifier votre profil.');
+        }
 
         $validatedData = $request->validate([
             'name' => 'required|string|max:50',

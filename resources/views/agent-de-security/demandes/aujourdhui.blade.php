@@ -16,12 +16,12 @@
             <p class="text-sm text-slate-500">{{ $principal->entreprise }} — Superviseur : {{ $demande->superviseur->name }}</p>
             @if ($demande->service)<p class="text-sm text-slate-500">{{ $demande->service->departement->nom ?? '' }} — {{ $demande->service->nom }}</p>@endif
             <p class="mt-1 text-sm text-slate-600">Heure prévue : {{ $demande->heure_prevue }}</p>
-            @if ($demande->heure_arrivee)<p class="text-sm font-medium text-brand-700">Entrée : {{ $demande->heure_arrivee->format('H:i') }}</p>@endif
+            @if ($demande->heure_arrivee)<p class="text-sm font-medium text-emerald-700">Entrée : {{ $demande->heure_arrivee->format('H:i') }}</p>@endif
             @if ($demande->heure_sortie)<p class="text-sm text-slate-600">Sortie : {{ $demande->heure_sortie->format('H:i') }}</p>@endif
             <x-slot:aside>
                 @if (!$demande->heure_arrivee)
                     <form method="POST" action="{{ route('agent.demandes.arrivee', $demande->id) }}">@csrf
-                        <button type="submit" class="btn-primary inline-flex items-center gap-1 text-sm">
+                        <button type="submit" class="btn-success inline-flex items-center gap-1 text-sm">
                             <x-nav-icon name="check-circle" class="h-4 w-4" /> Accès site
                         </button>
                     </form>

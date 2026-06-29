@@ -13,7 +13,6 @@
             <x-form-field label="Postnom" name="lastName" :value="old('lastName')" />
             <x-form-field label="Prénom" name="firstName" :value="old('firstName')" />
             <x-form-field label="Email" name="email" type="email" :value="old('email')" required />
-            <x-form-field label="Nom d'utilisateur" name="username" :value="old('username')" placeholder="Optionnel" />
             <x-form-field label="Fonction" name="fonction" :value="old('fonction')" placeholder="Ex. Superviseur RH" />
             <x-form-field label="Mot de passe" name="password" type="password" required />
             <x-form-field label="Confirmer le mot de passe" name="password_confirmation" type="password" required />

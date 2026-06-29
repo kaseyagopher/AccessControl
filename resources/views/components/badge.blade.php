@@ -3,14 +3,14 @@
 @php
     $styles = match($status) {
         'brouillon' => 'bg-slate-100 text-slate-700',
-        'en_attente', 'envoyee' => 'bg-brand-100 text-brand-800',
-        'recu', 'recue' => 'bg-mmg-charcoal/10 text-mmg-charcoal',
-        'valide', 'traitee' => 'bg-brand-50 text-brand-700 ring-1 ring-brand-200',
-        'refuse', 'refusee' => 'bg-brand-800 text-white',
-        'termine' => 'bg-mmg-charcoal text-white',
+        'en_attente', 'envoyee' => 'bg-amber-100 text-amber-800',
+        'recu', 'recue' => 'bg-sky-100 text-sky-800',
+        'valide', 'traitee' => 'bg-emerald-100 text-emerald-800',
+        'refuse', 'refusee' => 'bg-red-100 text-red-800',
+        'termine' => 'bg-slate-200 text-slate-800',
         'admin' => 'bg-mmg-charcoal text-white',
-        'superviseur' => 'bg-brand-100 text-brand-800',
-        'agent-de-security' => 'bg-brand-50 text-brand-700 ring-1 ring-brand-200',
+        'superviseur' => 'bg-indigo-100 text-indigo-800',
+        'agent-de-security' => 'bg-cyan-100 text-cyan-800',
         default => 'bg-slate-100 text-slate-700',
     };
     $label = match($status) {

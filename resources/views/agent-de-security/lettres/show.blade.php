@@ -27,19 +27,19 @@
         <x-section-card title="Valider / Traiter" icon="check-circle" color="emerald">
             <form method="POST" action="{{ route('agent.lettres.valider', $lettre->id) }}" class="space-y-3">
                 @csrf
-                <textarea name="observation_securite" placeholder="Observation (optionnel)" rows="3" class="input-field @error('observation_securite') border-brand-400 @enderror">{{ old('observation_securite') }}</textarea>
+                <textarea name="observation_securite" placeholder="Observation (optionnel)" rows="3" class="input-field @error('observation_securite') border-red-400 @enderror">{{ old('observation_securite') }}</textarea>
                 @error('observation_securite')
-                    <p class="text-sm text-brand-700">{{ $message }}</p>
+                    <p class="text-sm text-red-600">{{ $message }}</p>
                 @enderror
-                <button type="submit" class="btn-primary w-full">Marquer comme traitée</button>
+                <button type="submit" class="btn-success w-full">Marquer comme traitée</button>
             </form>
         </x-section-card>
         <x-section-card title="Refuser" icon="x-circle" color="red">
             <form method="POST" action="{{ route('agent.lettres.refuser', $lettre->id) }}" class="space-y-3">
                 @csrf
-                <textarea name="observation_securite" placeholder="Motif du refus *" rows="3" required class="input-field @error('observation_securite') border-brand-400 @enderror">{{ old('observation_securite') }}</textarea>
+                <textarea name="observation_securite" placeholder="Motif du refus *" rows="3" required class="input-field @error('observation_securite') border-red-400 @enderror">{{ old('observation_securite') }}</textarea>
                 @error('observation_securite')
-                    <p class="text-sm text-brand-700">{{ $message }}</p>
+                    <p class="text-sm text-red-600">{{ $message }}</p>
                 @enderror
                 <button type="submit" class="btn-danger w-full">Refuser</button>
             </form>

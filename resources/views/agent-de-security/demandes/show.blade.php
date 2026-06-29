@@ -55,22 +55,22 @@
 
 @if (in_array($demande->statut, ['en_attente', 'recu']))
     <div class="mt-6 grid gap-6 lg:grid-cols-2">
-        <x-section-card title="Valider" icon="check-circle" color="brand" class="border-brand-100">
+        <x-section-card title="Valider" icon="check-circle" color="emerald" class="border-emerald-200">
             <form method="POST" action="{{ route('agent.demandes.valider', $demande->id) }}" class="space-y-3">
                 @csrf
-                <textarea name="commentaire_securite" placeholder="Commentaire (optionnel)" rows="3" class="input-field @error('commentaire_securite') border-brand-400 @enderror">{{ old('commentaire_securite') }}</textarea>
+                <textarea name="commentaire_securite" placeholder="Commentaire (optionnel)" rows="3" class="input-field @error('commentaire_securite') border-red-400 @enderror">{{ old('commentaire_securite') }}</textarea>
                 @error('commentaire_securite')
-                    <p class="text-sm text-brand-700">{{ $message }}</p>
+                    <p class="text-sm text-red-600">{{ $message }}</p>
                 @enderror
-                <button type="submit" class="btn-primary w-full">Valider la demande</button>
+                <button type="submit" class="btn-success w-full">Valider la demande</button>
             </form>
         </x-section-card>
-        <x-section-card title="Refuser" icon="x-circle" color="red" class="border-brand-200">
+        <x-section-card title="Refuser" icon="x-circle" color="red" class="border-red-200">
             <form method="POST" action="{{ route('agent.demandes.refuser', $demande->id) }}" class="space-y-3">
                 @csrf
-                <textarea name="commentaire_securite" placeholder="Motif du refus *" rows="3" required class="input-field @error('commentaire_securite') border-brand-400 @enderror">{{ old('commentaire_securite') }}</textarea>
+                <textarea name="commentaire_securite" placeholder="Motif du refus *" rows="3" required class="input-field @error('commentaire_securite') border-red-400 @enderror">{{ old('commentaire_securite') }}</textarea>
                 @error('commentaire_securite')
-                    <p class="text-sm text-brand-700">{{ $message }}</p>
+                    <p class="text-sm text-red-600">{{ $message }}</p>
                 @enderror
                 <button type="submit" class="btn-danger w-full">Refuser la demande</button>
             </form>

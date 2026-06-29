@@ -47,7 +47,7 @@
             </ul>
             <p class="mt-2 text-sm text-slate-600">{{ Str::limit($demande->motif, 80) }}</p>
             @if ($demande->commentaire_securite)
-                <p class="mt-2 rounded-lg bg-brand-50 px-3 py-2 text-sm text-brand-800"><strong>Sécurité :</strong> {{ $demande->commentaire_securite }}</p>
+                <p class="mt-2 rounded-lg bg-amber-50 px-3 py-2 text-sm text-amber-900"><strong>Sécurité :</strong> {{ $demande->commentaire_securite }}</p>
             @endif
             <x-slot:aside>
                 <div class="flex flex-col items-end gap-2">

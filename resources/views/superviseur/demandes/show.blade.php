@@ -53,7 +53,7 @@
             @if ($demande->heure_sortie)<div class="flex justify-between border-b border-slate-100 py-2"><dt class="text-slate-500">Heure de sortie</dt><dd>{{ $demande->heure_sortie->format('H:i') }}</dd></div>@endif
         </dl>
         @if ($demande->commentaire_securite)
-            <p class="mt-4 rounded-lg bg-brand-50 px-3 py-2 text-sm text-brand-800"><strong>Sécurité :</strong> {{ $demande->commentaire_securite }}</p>
+            <p class="mt-4 rounded-lg bg-amber-50 px-3 py-2 text-sm text-amber-900"><strong>Sécurité :</strong> {{ $demande->commentaire_securite }}</p>
         @endif
     </x-section-card>
 </div>
