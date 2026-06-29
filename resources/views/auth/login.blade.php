@@ -46,7 +46,7 @@
                     @csrf
 
                     <div>
-                        <label for="login" class="mb-2 block text-sm font-medium text-slate-700">Adresse email</label>
+                        <label for="login" class="mb-2 block text-sm font-medium text-slate-700">Adre</label>
                         <input
                             type="text"
                             name="login"
