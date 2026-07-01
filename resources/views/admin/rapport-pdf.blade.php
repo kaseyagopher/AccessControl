@@ -23,7 +23,7 @@
     <p>Période : {{ $debut }} au {{ $fin }}</p>
     <table>
         <thead>
-            <tr><th>Visiteur</th><th>Entreprise</th><th>Superviseur</th><th>Date</th><th>Statut</th><th>Motif</th></tr>
+            <tr><th>Visiteur</th><th>Entreprise</th><th>Superviseur</th><th>Date</th><th>Statut</th><th>Agent validateur</th><th>Motif</th></tr>
         </thead>
         <tbody>
             @foreach ($demandes as $d)
@@ -33,6 +33,7 @@
                     <td>{{ $d->superviseur->name }}</td>
                     <td>{{ $d->date_prevue->format('d/m/Y') }}</td>
                     <td>{{ $d->statut }}</td>
+                    <td>{{ $d->validateur?->nomComplet() ?? '—' }}</td>
                     <td>{{ $d->motif }}</td>
                 </tr>
             @endforeach

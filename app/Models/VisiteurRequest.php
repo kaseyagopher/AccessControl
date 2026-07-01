@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class VisiteurRequest extends Model
 {
-    public const STATUTS = ['brouillon', 'en_attente', 'recu', 'valide', 'refuse', 'termine'];
+    public const STATUTS = ['brouillon', 'en_attente', 'recu', 'valide', 'refuse', 'termine', 'expiree'];
 
     protected $fillable = [
         'visiteur_id', 'superviseur_id', 'service_id', 'motif', 'date_prevue', 'heure_prevue',

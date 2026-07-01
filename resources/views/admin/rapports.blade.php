@@ -15,10 +15,12 @@
     </form>
 </x-section-card>
 
-<div class="mb-8 grid gap-4 sm:grid-cols-3">
+<div class="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
     <x-stat-card label="Total visites" :value="$stats['total_visiteurs']" icon="clipboard" color="brand" />
     <x-stat-card label="Validées" :value="$stats['validees']" icon="check-circle" color="emerald" />
     <x-stat-card label="Refusées" :value="$stats['refusees']" icon="x-circle" color="red" />
+    <x-stat-card label="Terminées" :value="$stats['terminees']" icon="clock" color="charcoal" />
+    <x-stat-card label="Expirées" :value="$stats['expirees']" icon="clock" color="orange" />
 </div>
 
 <div class="grid gap-6 lg:grid-cols-2">

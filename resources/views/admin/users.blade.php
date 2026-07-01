@@ -38,20 +38,24 @@
                 <a href="{{ route('admin.update-user', $user->id) }}" class="btn-secondary inline-flex items-center gap-1 text-xs">
                     <x-nav-icon name="pencil" class="h-3.5 w-3.5" /> Modifier
                 </a>
-                <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Supprimer définitivement {{ $user->name }} ?');">
-                    @csrf @method('DELETE')
-                    <button type="submit" class="btn-danger text-xs">Supprimer</button>
-                </form>
-                @if ($user->trashed())
-                    <form action="{{ route('admin.users.restore', $user->id) }}" method="POST">
-                        @csrf @method('PATCH')
-                        <button type="submit" class="btn-secondary text-xs">Réactiver</button>
-                    </form>
-                @else
-                    <form action="{{ route('admin.users.disable', $user->id) }}" method="POST" onsubmit="return confirm('Désactiver {{ $user->name }} ?');">
+                @if ($user->role !== 'admin')
+                    <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Supprimer définitivement {{ $user->name }} ?');">
                         @csrf @method('DELETE')
-                        <button type="submit" class="btn-secondary text-xs">Désactiver</button>
+                        <button type="submit" class="btn-danger text-xs">Supprimer</button>
                     </form>
+                    @if ($user->trashed())
+                        <form action="{{ route('admin.users.restore', $user->id) }}" method="POST">
+                            @csrf @method('PATCH')
+                            <button type="submit" class="btn-secondary text-xs">Réactiver</button>
+                        </form>
+                    @else
+                        <form action="{{ route('admin.users.disable', $user->id) }}" method="POST" onsubmit="return confirm('Désactiver {{ $user->name }} ?');">
+                            @csrf @method('DELETE')
+                            <button type="submit" class="btn-secondary text-xs">Désactiver</button>
+                        </form>
+                    @endif
+                @else
+                    <span class="inline-flex items-center rounded-lg bg-slate-100 px-3 py-1.5 text-xs font-medium text-slate-600">Compte protégé</span>
                 @endif
             </div>
         </div>

@@ -17,6 +17,13 @@ class DashboardController extends Controller
             'visiteurs_jour' => VisiteurRequest::whereDate('date_prevue', today())->count(),
             'en_attente' => VisiteurRequest::where('statut', 'en_attente')->count(),
             'validees' => VisiteurRequest::where('statut', 'valide')->count(),
+            'refusees' => VisiteurRequest::where('statut', 'refuse')->count(),
+            'terminees' => VisiteurRequest::where('statut', 'termine')->count(),
+            'expirees' => VisiteurRequest::where('statut', 'expiree')->count(),
+            'entrees_jour' => VisiteurRequest::whereNotNull('heure_arrivee')
+                ->whereDate('heure_arrivee', today())->count(),
+            'sorties_jour' => VisiteurRequest::whereNotNull('heure_sortie')
+                ->whereDate('heure_sortie', today())->count(),
         ];
 
         return view('admin.dashboard', compact('stats'));
@@ -45,6 +52,10 @@ class DashboardController extends Controller
                 $q->where('statut', 'termine')->whereDate('date_prevue', today());
             })->count(),
             'a_traiter' => VisiteurRequest::whereIn('statut', ['en_attente', 'recu'])->count(),
+            'entrees_jour' => VisiteurRequest::whereNotNull('heure_arrivee')
+                ->whereDate('heure_arrivee', today())->count(),
+            'sorties_jour' => VisiteurRequest::whereNotNull('heure_sortie')
+                ->whereDate('heure_sortie', today())->count(),
         ];
         $notifications = UserNotification::where('user_id', Auth::id())->latest()->take(10)->get();
 

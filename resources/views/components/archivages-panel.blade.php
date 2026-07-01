@@ -51,7 +51,7 @@
             <label class="mb-1.5 block text-sm font-medium text-slate-700">Statut</label>
             <select name="statut" class="input-field">
                 <option value="">Tous les statuts</option>
-                @foreach (['brouillon', 'en_attente', 'recu', 'valide', 'refuse', 'termine'] as $s)
+                @foreach (['brouillon', 'en_attente', 'recu', 'valide', 'refuse', 'termine', 'expiree'] as $s)
                     <option value="{{ $s }}" @selected(request('statut') === $s)>{{ str_replace('-', ' ', $s) }}</option>
                 @endforeach
             </select>

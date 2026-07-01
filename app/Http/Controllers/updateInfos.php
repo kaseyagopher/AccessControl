@@ -63,6 +63,10 @@ class updateInfos extends Controller
             return redirect()->back()->with('error', 'Vous ne pouvez pas vous supprimer vous-même.');
         }
 
+        if ($user->role === 'admin') {
+            return redirect()->back()->with('error', 'Le compte administrateur ne peut pas être supprimé.');
+        }
+
         $user->forceDelete();
 
         return redirect()->back()->with('success', "L'utilisateur a bien été supprimé.");
@@ -74,6 +78,10 @@ class updateInfos extends Controller
 
         if ($user->id === auth()->id()) {
             return redirect()->back()->with('error', 'Vous ne pouvez pas désactiver votre propre compte.');
+        }
+
+        if ($user->role === 'admin') {
+            return redirect()->back()->with('error', 'Le compte administrateur ne peut pas être désactivé.');
         }
 
         $user->delete();

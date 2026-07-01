@@ -18,6 +18,8 @@ class RapportController extends Controller
             'total_visiteurs' => VisiteurRequest::whereBetween('date_prevue', [$debut, $fin])->count(),
             'validees' => VisiteurRequest::whereBetween('date_prevue', [$debut, $fin])->where('statut', 'valide')->count(),
             'refusees' => VisiteurRequest::whereBetween('date_prevue', [$debut, $fin])->where('statut', 'refuse')->count(),
+            'terminees' => VisiteurRequest::whereBetween('date_prevue', [$debut, $fin])->where('statut', 'termine')->count(),
+            'expirees' => VisiteurRequest::whereBetween('date_prevue', [$debut, $fin])->where('statut', 'expiree')->count(),
             'par_superviseur' => VisiteurRequest::whereBetween('date_prevue', [$debut, $fin])
                 ->select('superviseur_id', DB::raw('count(*) as total'))
                 ->groupBy('superviseur_id')
@@ -40,7 +42,7 @@ class RapportController extends Controller
         $debut = $request->input('debut', now()->startOfMonth()->toDateString());
         $fin = $request->input('fin', now()->toDateString());
 
-        $demandes = VisiteurRequest::with(['visiteur', 'superviseur'])
+        $demandes = VisiteurRequest::with(['visiteur', 'superviseur', 'validateur'])
             ->whereBetween('date_prevue', [$debut, $fin])
             ->get();
 
@@ -53,7 +55,7 @@ class RapportController extends Controller
 
         $callback = function () use ($demandes) {
             $file = fopen('php://output', 'w');
-            fputcsv($file, ['Visiteur', 'Entreprise', 'Superviseur', 'Date', 'Statut', 'Motif']);
+            fputcsv($file, ['Visiteur', 'Entreprise', 'Superviseur', 'Date', 'Statut', 'Agent validateur', 'Motif']);
             foreach ($demandes as $d) {
                 fputcsv($file, [
                     $d->visiteur->nomComplet(),
@@ -61,6 +63,7 @@ class RapportController extends Controller
                     $d->superviseur->name,
                     $d->date_prevue->format('Y-m-d'),
                     $d->statut,
+                    $d->validateur?->nomComplet() ?? '—',
                     $d->motif,
                 ]);
             }
@@ -75,7 +78,7 @@ class RapportController extends Controller
         $debut = $request->input('debut', now()->startOfMonth()->toDateString());
         $fin = $request->input('fin', now()->toDateString());
 
-        $demandes = VisiteurRequest::with(['visiteur', 'superviseur'])
+        $demandes = VisiteurRequest::with(['visiteur', 'superviseur', 'validateur'])
             ->whereBetween('date_prevue', [$debut, $fin])
             ->get();
 

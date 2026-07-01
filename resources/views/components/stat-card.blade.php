@@ -7,7 +7,8 @@
         'amber' => ['icon' => 'bg-amber-50 text-amber-600', 'value' => 'text-amber-600'],
         'emerald' => ['icon' => 'bg-emerald-50 text-emerald-600', 'value' => 'text-emerald-600'],
         'cyan' => ['icon' => 'bg-cyan-50 text-cyan-600', 'value' => 'text-cyan-600'],
-        'red', 'orange' => ['icon' => 'bg-red-50 text-red-600', 'value' => 'text-red-600'],
+        'orange' => ['icon' => 'bg-orange-50 text-orange-600', 'value' => 'text-orange-600'],
+        'red' => ['icon' => 'bg-red-50 text-red-600', 'value' => 'text-red-600'],
         'charcoal' => ['icon' => 'bg-mmg-charcoal/10 text-mmg-charcoal', 'value' => 'text-mmg-charcoal'],
         default => ['icon' => 'bg-brand-50 text-brand-600', 'value' => 'text-brand-600'],
     };

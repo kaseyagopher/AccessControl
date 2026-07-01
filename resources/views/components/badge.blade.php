@@ -8,6 +8,7 @@
         'valide', 'traitee' => 'bg-emerald-100 text-emerald-800',
         'refuse', 'refusee' => 'bg-red-100 text-red-800',
         'termine' => 'bg-slate-200 text-slate-800',
+        'expiree' => 'bg-orange-100 text-orange-800',
         'admin' => 'bg-mmg-charcoal text-white',
         'superviseur' => 'bg-indigo-100 text-indigo-800',
         'agent-de-security' => 'bg-cyan-100 text-cyan-800',
@@ -20,6 +21,7 @@
         'valide' => 'Validé',
         'refuse' => 'Non validé',
         'termine' => 'Terminé',
+        'expiree' => 'Expirée',
         default => str_replace('-', ' ', $status),
     };
 @endphp
