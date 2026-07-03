@@ -9,16 +9,10 @@ class DepartementServiceSeeder extends Seeder
 {
     public function run(): void
     {
+        $entreprises = config('entreprises');
+
         $data = [
-            'Sous-traitance' => [
-                'ITM MMG',
-                'Mexco',
-                'SSL',
-                'IFS',
-                'GTI (Godwin trading for Investment sarl)',
-                'SDI',
-                'Gymtec',
-            ],
+            'Sous-traitance' => $entreprises,
             'Département MMG' => [
                 'Sécurité',
                 'IT',

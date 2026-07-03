@@ -17,7 +17,7 @@ class EnregistrementUser extends Controller
             'username' => 'nullable|string|max:25|unique:users,username',
             'password' => 'required|string|min:8|confirmed',
             'matricule' => 'nullable|string|unique:users,matricule',
-            'fonction' => 'nullable|string|max:100',
+            'fonction' => 'nullable|string|max:100|in:'.implode(',', config('entreprises')),
             'role' => 'required|in:agent-de-security,superviseur',
         ], $this->messages());
 
@@ -42,10 +42,9 @@ class EnregistrementUser extends Controller
             'lastName' => 'nullable|string|max:50',
             'firstName' => 'nullable|string|max:50',
             'email' => 'required|email|max:250|unique:users,email,'.$user->id,
-            'username' => 'nullable|string|max:25|unique:users,username,'.$user->id,
             'password' => 'nullable|string|min:8|confirmed',
             'matricule' => 'nullable|string|unique:users,matricule,'.$user->id,
-            'fonction' => 'nullable|string|max:100',
+            'fonction' => 'nullable|string|max:100|in:'.implode(',', config('entreprises')),
             'role' => 'required|in:admin,agent-de-security,superviseur',
         ], $this->messages());
 

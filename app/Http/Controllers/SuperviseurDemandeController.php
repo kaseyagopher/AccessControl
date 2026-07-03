@@ -6,6 +6,7 @@ use App\Models\Departement;
 use App\Models\Service;
 use App\Models\Visiteur;
 use App\Models\VisiteurRequest;
+use App\Support\VnfStatut;
 use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -167,8 +168,14 @@ class SuperviseurDemandeController extends Controller
     {
         $departements = Departement::with('services')->orderBy('nom')->get();
         $services = Service::with('departement')->orderBy('nom')->get();
+        $entreprises = $this->entreprises();
 
-        return compact('departements', 'services');
+        return compact('departements', 'services', 'entreprises');
+    }
+
+    private function entreprises(): array
+    {
+        return config('entreprises');
     }
 
     private function validateVnf(Request $request): array
@@ -180,8 +187,7 @@ class SuperviseurDemandeController extends Controller
             'visiteurs.*.prenom' => 'required|string|max:100',
             'visiteurs.*.genre' => 'nullable|in:M,F,Autre',
             'visiteurs.*.telephone' => 'required|string|max:30',
-            'visiteurs.*.entreprise' => 'required|string|max:150',
-            'visiteurs.*.fonction' => 'nullable|string|max:100',
+            'visiteurs.*.entreprise' => 'required|string|max:150|in:'.implode(',', $this->entreprises()),
             'service_id' => 'required|exists:services,id',
             'motif' => 'required|string|max:2000',
             'date_prevue' => 'required|date|after_or_equal:today',
@@ -201,6 +207,8 @@ class SuperviseurDemandeController extends Controller
     private function persistVnf(array $data, Request $request, ?VisiteurRequest $demande, bool $envoyer): VisiteurRequest
     {
         $visiteurIds = [];
+        $superviseur = Auth::user();
+
         foreach ($data['visiteurs'] as $visiteurData) {
             $visiteur = Visiteur::create([
                 'nom' => $visiteurData['nom'],
@@ -209,8 +217,8 @@ class SuperviseurDemandeController extends Controller
                 'genre' => $visiteurData['genre'] ?? null,
                 'telephone' => $visiteurData['telephone'],
                 'entreprise' => $visiteurData['entreprise'],
-                'fonction' => $visiteurData['fonction'] ?? null,
-                'superviseur_id' => Auth::id(),
+                'fonction' => $superviseur->fonction,
+                'superviseur_id' => $superviseur->id,
             ]);
             $visiteurIds[] = $visiteur->id;
         }
@@ -269,11 +277,6 @@ class SuperviseurDemandeController extends Controller
 
     private function mapStatutFiltre(string $filtre): string|array
     {
-        return match ($filtre) {
-            'valide' => 'valide',
-            'en_attente' => ['brouillon', 'en_attente', 'recu'],
-            'non_valide' => 'refuse',
-            default => $filtre,
-        };
+        return VnfStatut::mapFiltre($filtre);
     }
 }

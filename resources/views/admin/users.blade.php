@@ -25,6 +25,9 @@
                         <x-badge :status="$user->role" />
                     </div>
                     <p class="mt-1 truncate text-sm text-slate-500">{{ $user->email }}</p>
+                    @if ($user->fonction)
+                        <p class="mt-0.5 text-xs font-medium text-slate-600">Fonction : {{ $user->fonction }}</p>
+                    @endif
                     @if ($user->matricule)
                         <p class="mt-0.5 text-xs text-slate-400">Matricule : {{ $user->matricule }}</p>
                     @endif

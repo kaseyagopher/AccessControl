@@ -1,12 +1,17 @@
-@props(['notifications', 'markReadRoute'])
+@props(['notifications', 'markReadRoute', 'viewAllRoute' => null])
 
 @if ($notifications->count())
     <div class="card mb-8">
-        <div class="mb-4 flex items-center gap-3">
-            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-50 text-amber-600">
-                <x-nav-icon name="bell" class="h-5 w-5" />
+        <div class="mb-4 flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-50 text-amber-600">
+                    <x-nav-icon name="bell" class="h-5 w-5" />
+                </div>
+                <h2 class="text-lg font-semibold text-slate-900">Notifications</h2>
             </div>
-            <h2 class="text-lg font-semibold text-slate-900">Notifications</h2>
+            @if ($viewAllRoute)
+                <a href="{{ route($viewAllRoute) }}" class="text-sm font-medium text-brand-600 hover:text-brand-700">Voir tout</a>
+            @endif
         </div>
         <div class="space-y-3">
             @foreach ($notifications as $notif)

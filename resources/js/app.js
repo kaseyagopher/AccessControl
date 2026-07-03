@@ -32,22 +32,18 @@ document.addEventListener('DOMContentLoaded', () => {
         loadingOverlay.classList.add('flex');
     };
 
+    let loadingTimer = null;
+    const showLoadingDelayed = () => {
+        if (!loadingOverlay) return;
+        clearTimeout(loadingTimer);
+        loadingTimer = setTimeout(showLoading, 350);
+    };
+
     document.querySelectorAll('form').forEach((form) => {
         form.addEventListener('submit', () => {
             if (form.dataset.noLoading !== 'true') {
-                showLoading();
+                showLoadingDelayed();
             }
         });
-    });
-
-    document.querySelectorAll('a[href]').forEach((link) => {
-        const href = link.getAttribute('href');
-        if (!href || href.startsWith('#') || href.startsWith('javascript:') || link.target === '_blank') {
-            return;
-        }
-        if (link.origin !== window.location.origin) {
-            return;
-        }
-        link.addEventListener('click', () => showLoading());
     });
 });

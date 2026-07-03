@@ -15,8 +15,14 @@
     </form>
 </x-section-card>
 
-<div class="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+<div class="mb-4 rounded-xl border border-sky-100 bg-sky-50 px-4 py-3 text-sm text-sky-900">
+    Les rapports incluent les visites dont la <strong>date prévue</strong> ou la <strong>date de soumission</strong> est dans la période sélectionnée (y compris aujourd'hui).
+</div>
+
+<div class="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-7">
     <x-stat-card label="Total visites" :value="$stats['total_visiteurs']" icon="clipboard" color="brand" />
+    <x-stat-card label="Soumises (période)" :value="$stats['soumises_periode']" icon="calendar-plus" color="sky" />
+    <x-stat-card label="Soumises aujourd'hui" :value="$stats['soumises_jour']" icon="clock" color="cyan" />
     <x-stat-card label="Validées" :value="$stats['validees']" icon="check-circle" color="emerald" />
     <x-stat-card label="Refusées" :value="$stats['refusees']" icon="x-circle" color="red" />
     <x-stat-card label="Terminées" :value="$stats['terminees']" icon="clock" color="charcoal" />

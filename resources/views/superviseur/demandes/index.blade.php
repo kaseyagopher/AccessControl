@@ -18,9 +18,9 @@
         <input type="date" name="date" value="{{ request('date') }}" class="input-field">
         <select name="statut" class="input-field">
             <option value="">Tous les statuts</option>
-            <option value="en_attente" @selected(request('statut') === 'en_attente')>En attente</option>
-            <option value="valide" @selected(request('statut') === 'valide')>Validé</option>
-            <option value="non_valide" @selected(request('statut') === 'non_valide')>Non validé</option>
+            @foreach (\App\Support\VnfStatut::libellesFiltre() as $value => $label)
+                <option value="{{ $value }}" @selected(request('statut') === $value)>{{ $label }}</option>
+            @endforeach
         </select>
         <button type="submit" class="btn-primary inline-flex items-center justify-center gap-2">
             <x-nav-icon name="search" class="h-4 w-4" /> Rechercher

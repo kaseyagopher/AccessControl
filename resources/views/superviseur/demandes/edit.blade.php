@@ -12,7 +12,7 @@
 <div class="card max-w-3xl">
     <form method="POST" action="{{ route('superviseur.demandes.update', $demande->id) }}" enctype="multipart/form-data" class="space-y-8">
         @csrf @method('PUT')
-        @include('superviseur.demandes.partials.vnf-form', ['demande' => $demande, 'departements' => $departements, 'services' => $services])
+        @include('superviseur.demandes.partials.vnf-form', ['demande' => $demande, 'departements' => $departements, 'services' => $services, 'entreprises' => $entreprises])
 
         <div class="flex flex-wrap gap-3">
             <button type="submit" name="action" value="enregistrer" class="btn-secondary">Enregistrer</button>

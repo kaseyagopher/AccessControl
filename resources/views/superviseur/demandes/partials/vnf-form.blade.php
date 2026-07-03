@@ -1,4 +1,4 @@
-@props(['demande' => null, 'departements', 'services'])
+@props(['demande' => null, 'departements', 'services', 'entreprises'])
 
 @php
     $visiteurs = $demande
@@ -10,7 +10,14 @@
 
 <div>
     <div class="mb-4 flex items-center justify-between">
-        <h2 class="text-lg font-semibold text-slate-900">Visiteurs</h2>
+        <div>
+            <h2 class="text-lg font-semibold text-slate-900">Visiteurs</h2>
+            @if (Auth::user()->fonction)
+                <p class="mt-1 text-sm text-slate-500">Fonction du superviseur (appliquée aux visiteurs) : <strong>{{ Auth::user()->fonction }}</strong></p>
+            @else
+                <p class="mt-1 text-sm text-amber-700">Aucune fonction renseignée sur votre profil. Contactez l'administrateur.</p>
+            @endif
+        </div>
         <button type="button" id="add-visiteur" class="btn-secondary inline-flex items-center gap-2 text-sm">
             <x-nav-icon name="user-plus" class="h-4 w-4" />
             Ajouter un visiteur
@@ -38,8 +45,18 @@
                         </select>
                     </div>
                     <x-form-field label="Téléphone" :name="'visiteurs['.$index.'][telephone]'" :value="old('visiteurs.'.$index.'.telephone', $v?->telephone)" required />
-                    <x-form-field label="Entreprise" :name="'visiteurs['.$index.'][entreprise]'" :value="old('visiteurs.'.$index.'.entreprise', $v?->entreprise)" required />
-                    <x-form-field label="Fonction / Poste" :name="'visiteurs['.$index.'][fonction]'" :value="old('visiteurs.'.$index.'.fonction', $v?->fonction)" full />
+                    <div>
+                        <label class="mb-1.5 block text-sm font-medium text-slate-700">Entreprise <span class="text-red-500">*</span></label>
+                        <select name="visiteurs[{{ $index }}][entreprise]" required class="input-field @error('visiteurs.'.$index.'.entreprise') border-red-400 @enderror">
+                            <option value="">Choisir une entreprise</option>
+                            @foreach ($entreprises as $entreprise)
+                                <option value="{{ $entreprise }}" @selected(old('visiteurs.'.$index.'.entreprise', $v?->entreprise) === $entreprise)>{{ $entreprise }}</option>
+                            @endforeach
+                        </select>
+                        @error('visiteurs.'.$index.'.entreprise')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
                 </div>
             </div>
         @endforeach
@@ -122,12 +139,13 @@
                 <input type="text" name="visiteurs[__INDEX__][telephone]" required class="input-field">
             </div>
             <div>
-                <label class="mb-1.5 block text-sm font-medium text-slate-700">Entreprise <span class="text-brand-600">*</span></label>
-                <input type="text" name="visiteurs[__INDEX__][entreprise]" required class="input-field">
-            </div>
-            <div class="sm:col-span-2">
-                <label class="mb-1.5 block text-sm font-medium text-slate-700">Fonction / Poste</label>
-                <input type="text" name="visiteurs[__INDEX__][fonction]" class="input-field">
+                <label class="mb-1.5 block text-sm font-medium text-slate-700">Entreprise <span class="text-red-500">*</span></label>
+                <select name="visiteurs[__INDEX__][entreprise]" required class="input-field">
+                    <option value="">Choisir une entreprise</option>
+                    @foreach ($entreprises as $entreprise)
+                        <option value="{{ $entreprise }}">{{ $entreprise }}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
     </div>

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\VisiteurRequest;
+use App\Support\VnfStatut;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -28,7 +29,7 @@ class ArchivageService
             $query->whereHas('visiteurs', fn ($q) => $q->where('prenom', 'like', '%'.$request->prenom.'%'));
         }
         if ($request->filled('entreprise')) {
-            $query->whereHas('visiteurs', fn ($q) => $q->where('entreprise', 'like', '%'.$request->entreprise.'%'));
+            $query->whereHas('visiteurs', fn ($q) => $q->where('entreprise', $request->entreprise));
         }
         if ($request->filled('superviseur')) {
             $query->whereHas('superviseur', fn ($q) => $q->where('name', 'like', '%'.$request->superviseur.'%'));
@@ -43,7 +44,12 @@ class ArchivageService
             $query->whereDate('date_prevue', '<=', $request->date_fin);
         }
         if ($request->filled('statut')) {
-            $query->where('statut', $request->statut);
+            $statut = VnfStatut::mapFiltre($request->statut);
+            if (is_array($statut)) {
+                $query->whereIn('statut', $statut);
+            } else {
+                $query->where('statut', $statut);
+            }
         }
 
         return $query->latest();

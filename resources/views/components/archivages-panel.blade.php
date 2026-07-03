@@ -22,7 +22,12 @@
         </div>
         <div>
             <label class="mb-1.5 block text-sm font-medium text-slate-700">Entreprise</label>
-            <input type="text" name="entreprise" value="{{ request('entreprise') }}" placeholder="Entreprise" class="input-field">
+            <select name="entreprise" class="input-field">
+                <option value="">Toutes les entreprises</option>
+                @foreach (config('entreprises') as $entreprise)
+                    <option value="{{ $entreprise }}" @selected(request('entreprise') === $entreprise)>{{ $entreprise }}</option>
+                @endforeach
+            </select>
         </div>
         @if ($showSuperviseur)
             <div>
@@ -51,8 +56,8 @@
             <label class="mb-1.5 block text-sm font-medium text-slate-700">Statut</label>
             <select name="statut" class="input-field">
                 <option value="">Tous les statuts</option>
-                @foreach (['brouillon', 'en_attente', 'recu', 'valide', 'refuse', 'termine', 'expiree'] as $s)
-                    <option value="{{ $s }}" @selected(request('statut') === $s)>{{ str_replace('-', ' ', $s) }}</option>
+                @foreach (\App\Support\VnfStatut::libellesFiltre() as $value => $label)
+                    <option value="{{ $value }}" @selected(request('statut') === $value)>{{ $label }}</option>
                 @endforeach
             </select>
         </div>

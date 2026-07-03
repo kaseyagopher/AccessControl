@@ -8,6 +8,7 @@
 @include('layouts.partials.notifications-panel', [
     'notifications' => $notifications,
     'markReadRoute' => 'agent.notifications.lu',
+    'viewAllRoute' => 'agent.notifications.index',
 ])
 
 <div class="mb-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">

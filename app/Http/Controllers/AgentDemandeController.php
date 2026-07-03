@@ -63,7 +63,7 @@ class AgentDemandeController extends Controller
 
         NotificationService::notifierSuperviseur(
             $demande->superviseur_id,
-            'Votre demande de visite a été validée.',
+            'Votre VNF du '.$demande->date_prevue->format('d/m/Y').' a été validée par la sécurité.',
             'demande_validee'
         );
 
@@ -91,7 +91,7 @@ class AgentDemandeController extends Controller
 
         NotificationService::notifierSuperviseur(
             $demande->superviseur_id,
-            'Votre demande de visite a été refusée.',
+            'Votre VNF du '.$demande->date_prevue->format('d/m/Y').' a été refusée par la sécurité.',
             'demande_refusee'
         );
 

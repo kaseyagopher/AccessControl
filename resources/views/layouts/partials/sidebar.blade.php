@@ -13,12 +13,14 @@
             ['route' => 'superviseur.demandes.create', 'label' => 'Formulaire VNF', 'icon' => 'calendar-plus', 'prefix' => 'superviseur/demandes/create'],
             ['route' => 'superviseur.demandes.index', 'label' => 'Statut VNF', 'icon' => 'clipboard', 'prefix' => 'superviseur/demandes', 'exclude' => 'superviseur/demandes/create'],
             ['route' => 'superviseur.archivages', 'label' => 'Archivages', 'icon' => 'clock', 'prefix' => 'superviseur/archivages'],
+            ['route' => 'superviseur.notifications.index', 'label' => 'Notifications', 'icon' => 'bell', 'prefix' => 'superviseur/notifications', 'badge' => true],
         ],
         'agent-de-security' => [
             ['route' => 'agent-de-security.dashboard', 'label' => 'Tableau de bord', 'icon' => 'home', 'prefix' => 'agent-de-security', 'exact' => true],
             ['route' => 'agent.demandes.index', 'label' => 'Consulter VNF', 'icon' => 'inbox', 'prefix' => 'agent-de-security/demandes'],
             ['route' => 'agent.visites.aujourdhui', 'label' => 'Accès / sortie site', 'icon' => 'calendar-plus', 'prefix' => 'agent-de-security/visites-aujourdhui'],
             ['route' => 'agent.archivages', 'label' => 'Archivages', 'icon' => 'clock', 'prefix' => 'agent-de-security/archivages'],
+            ['route' => 'agent.notifications.index', 'label' => 'Notifications', 'icon' => 'bell', 'prefix' => 'agent-de-security/notifications', 'badge' => true],
         ],
         default => [],
     };
@@ -47,6 +49,11 @@
            class="sidebar-link {{ $active ? 'sidebar-link-active' : '' }}">
             <x-nav-icon :name="$link['icon']" />
             <span class="flex-1">{{ $link['label'] }}</span>
+            @if(!empty($link['badge']) && $unreadNotifications > 0)
+                <span class="flex h-5 min-w-5 items-center justify-center rounded-full bg-amber-500 px-1.5 text-xs font-semibold text-white">
+                    {{ $unreadNotifications > 99 ? '99+' : $unreadNotifications }}
+                </span>
+            @endif
             @if($active)
                 <svg class="h-4 w-4 text-brand-500" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />

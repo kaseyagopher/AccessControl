@@ -53,6 +53,7 @@ Route::middleware(['auth', 'role:superviseur'])->prefix('superviseur')->group(fu
     Route::post('/demandes/{id}/observation-acces', [SuperviseurDemandeController::class, 'observationAcces'])->name('superviseur.demandes.observation-acces');
     Route::post('/demandes/{id}/observation-sortie', [SuperviseurDemandeController::class, 'observationSortie'])->name('superviseur.demandes.observation-sortie');
     Route::get('/archivages', [ArchivageController::class, 'superviseur'])->name('superviseur.archivages');
+    Route::get('/notifications', [DashboardController::class, 'notifications'])->name('superviseur.notifications.index');
     Route::patch('/notifications/{id}/lu', [DashboardController::class, 'marquerLu'])->name('superviseur.notifications.lu');
 });
 
@@ -67,5 +68,6 @@ Route::middleware(['auth', 'role:agent-de-security'])->prefix('agent-de-security
     Route::post('/demandes/{id}/arrivee', [AgentDemandeController::class, 'confirmerArrivee'])->name('agent.demandes.arrivee');
     Route::post('/demandes/{id}/sortie', [AgentDemandeController::class, 'enregistrerSortie'])->name('agent.demandes.sortie');
     Route::get('/archivages', [ArchivageController::class, 'agent'])->name('agent.archivages');
+    Route::get('/notifications', [DashboardController::class, 'notifications'])->name('agent.notifications.index');
     Route::patch('/notifications/{id}/lu', [DashboardController::class, 'marquerLu'])->name('agent.notifications.lu');
 });

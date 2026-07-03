@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Cache;
 
 class UserNotification extends Model
 {
@@ -26,5 +27,12 @@ class UserNotification extends Model
             'message' => $message,
             'type' => $type,
         ]);
+
+        self::invalidateUnreadCache($userId);
+    }
+
+    public static function invalidateUnreadCache(int $userId): void
+    {
+        Cache::forget("notifications.unread.{$userId}");
     }
 }
