@@ -5,12 +5,6 @@
 @section('content')
 <x-page-header title="Tableau de bord" :subtitle="'Bienvenue, '.Auth::user()->name" icon="home" color="brand" />
 
-@include('layouts.partials.notifications-panel', [
-    'notifications' => $notifications,
-    'markReadRoute' => 'agent.notifications.lu',
-    'viewAllRoute' => 'agent.notifications.index',
-])
-
 <div class="mb-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
     <x-stat-card label="Visiteurs aujourd'hui" :value="$stats['aujourdhui']" icon="calendar-plus" color="sky" />
     <x-stat-card label="Entrées enregistrées" :value="$stats['entrees_jour']" icon="check-circle" color="emerald" />

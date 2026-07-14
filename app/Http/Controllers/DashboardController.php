@@ -64,7 +64,6 @@ class DashboardController extends Controller
             'terminees' => (int) $vr->terminees,
             'expirees' => (int) $vr->expirees,
         ];
-        $notifications = UserNotification::where('user_id', $userId)->latest()->take(10)->get();
         $recentDemandes = VisiteurRequest::with(['visiteur', 'visiteurs', 'service'])
             ->where('superviseur_id', $userId)
             ->where('statut', '!=', 'brouillon')
@@ -72,7 +71,7 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
 
-        return view('superviseur.dashboard', compact('stats', 'notifications', 'recentDemandes'));
+        return view('superviseur.dashboard', compact('stats', 'recentDemandes'));
     }
 
     public function agent()
@@ -91,9 +90,7 @@ class DashboardController extends Controller
             'entrees_jour' => (int) $vr->entrees_jour,
             'sorties_jour' => (int) $vr->sorties_jour,
         ];
-        $notifications = UserNotification::where('user_id', Auth::id())->latest()->take(10)->get();
-
-        return view('agent-de-security.dashboard', compact('stats', 'notifications'));
+        return view('agent-de-security.dashboard', compact('stats'));
     }
 
     public function notifications()

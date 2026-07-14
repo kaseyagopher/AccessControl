@@ -24,7 +24,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->n
 // --- ADMIN ---
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::get('/', [DashboardController::class, 'admin'])->name('admin.dashboard');
-    Route::get('/enregistrement', fn () => view('admin.formCreateUser'))->name('admin.enregistrement');
+    Route::get('/enregistrement', [EnregistrementUser::class, 'create'])->name('admin.enregistrement');
     Route::post('/enregistrement', [EnregistrementUser::class, 'store']);
     Route::get('/update-user/{id}', [EnregistrementUser::class, 'edit'])->name('admin.update-user');
     Route::put('/update-user/{id}', [EnregistrementUser::class, 'update']);

@@ -14,12 +14,15 @@
             <x-form-field label="Prénom" name="firstName" :value="old('firstName', $user->firstName)" />
             <x-form-field label="Email" name="email" type="email" :value="old('email', $user->email)" required />
             <div class="sm:col-span-2">
-                <label for="fonction" class="mb-1.5 block text-sm font-medium text-slate-700">Fonction / Entreprise</label>
+                <label for="fonction" class="mb-1.5 block text-sm font-medium text-slate-700">Fonction</label>
                 <select id="fonction" name="fonction" class="input-field @error('fonction') border-red-400 @enderror">
                     <option value="">—</option>
-                    @foreach (config('entreprises') as $entreprise)
-                        <option value="{{ $entreprise }}" @selected(old('fonction', $user->fonction) === $entreprise)>{{ $entreprise }}</option>
+                    @foreach ($departements as $departement)
+                        <option value="{{ $departement->nom }}" @selected(old('fonction', $user->fonction) === $departement->nom)>{{ $departement->nom }}</option>
                     @endforeach
+                    @if ($user->fonction && ! $departements->contains('nom', $user->fonction))
+                        <option value="{{ $user->fonction }}" selected>{{ $user->fonction }}</option>
+                    @endif
                 </select>
                 @error('fonction')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>

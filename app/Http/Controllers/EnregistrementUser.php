@@ -2,11 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Departement;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class EnregistrementUser extends Controller
 {
+    public function create()
+    {
+        $departements = Departement::orderBy('nom')->get();
+
+        return view('admin.formCreateUser', compact('departements'));
+    }
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -17,7 +26,7 @@ class EnregistrementUser extends Controller
             'username' => 'nullable|string|max:25|unique:users,username',
             'password' => 'required|string|min:8|confirmed',
             'matricule' => 'nullable|string|unique:users,matricule',
-            'fonction' => 'nullable|string|max:100|in:'.implode(',', config('entreprises')),
+            'fonction' => ['nullable', 'string', 'max:100', Rule::in($this->fonctionsAutorisees())],
             'role' => 'required|in:agent-de-security,superviseur',
         ], $this->messages());
 
@@ -29,13 +38,18 @@ class EnregistrementUser extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
+        $departements = Departement::orderBy('nom')->get();
 
-        return view('admin.updateUser', compact('user'));
+        return view('admin.updateUser', compact('user', 'departements'));
     }
 
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
+        $fonctions = $this->fonctionsAutorisees();
+        if ($user->fonction) {
+            $fonctions[] = $user->fonction;
+        }
 
         $validatedData = $request->validate([
             'name' => 'required|string|max:50',
@@ -44,7 +58,7 @@ class EnregistrementUser extends Controller
             'email' => 'required|email|max:250|unique:users,email,'.$user->id,
             'password' => 'nullable|string|min:8|confirmed',
             'matricule' => 'nullable|string|unique:users,matricule,'.$user->id,
-            'fonction' => 'nullable|string|max:100|in:'.implode(',', config('entreprises')),
+            'fonction' => ['nullable', 'string', 'max:100', Rule::in(array_unique($fonctions))],
             'role' => 'required|in:admin,agent-de-security,superviseur',
         ], $this->messages());
 
@@ -68,6 +82,11 @@ class EnregistrementUser extends Controller
         return view('admin.users', compact('users'));
     }
 
+    private function fonctionsAutorisees(): array
+    {
+        return Departement::query()->orderBy('nom')->pluck('nom')->all();
+    }
+
     private function messages(): array
     {
         return [
@@ -78,6 +97,7 @@ class EnregistrementUser extends Controller
             'password.confirmed' => 'La confirmation du mot de passe ne correspond pas.',
             'role.required' => 'Veuillez sélectionner un rôle.',
             'role.in' => 'Le rôle sélectionné est invalide.',
+            'fonction.in' => 'La fonction sélectionnée est invalide.',
         ];
     }
 }
