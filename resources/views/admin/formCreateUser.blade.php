@@ -16,7 +16,7 @@
             <div class="sm:col-span-2">
                 <label for="fonction" class="mb-1.5 block text-sm font-medium text-slate-700">Fonction</label>
                 <select id="fonction" name="fonction" class="input-field @error('fonction') border-red-400 @enderror">
-                    <option value="">— Choisir un département (recommandé pour superviseur) —</option>
+                    <option value="">— Choisir une fonction —</option>
                     @foreach ($departements as $departement)
                         <option value="{{ $departement->nom }}" @selected(old('fonction') === $departement->nom)>{{ $departement->nom }}</option>
                     @endforeach

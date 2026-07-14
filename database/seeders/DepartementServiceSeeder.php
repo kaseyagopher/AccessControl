@@ -11,12 +11,9 @@ class DepartementServiceSeeder extends Seeder
     public function run(): void
     {
         $data = [
-            'Sous-traitance' => [
-                'Maintenance',
-                'Transport',
-                'Construction',
-                'Nettoyage',
-                'Fourniture',
+            'Direction Générale' => [
+                'Secrétariat',
+                'Communication',
             ],
             'Département MMG' => [
                 'Sécurité',
@@ -25,9 +22,25 @@ class DepartementServiceSeeder extends Seeder
                 'Logistique',
                 'Mine',
             ],
+            'Informatique' => [
+                'Support technique',
+                'Développement',
+            ],
+            'Ressources Humaines' => [
+                'Recrutement',
+                'Formation',
+            ],
+            'Sous-traitance' => [
+                'Maintenance',
+                'Transport',
+                'Construction',
+                'Nettoyage',
+                'Fourniture',
+            ],
         ];
 
         $entreprises = config('entreprises', []);
+        $nomsGardes = array_keys($data);
 
         foreach ($data as $departementNom => $services) {
             $departement = Departement::firstOrCreate(['nom' => $departementNom]);
@@ -36,16 +49,19 @@ class DepartementServiceSeeder extends Seeder
                 $departement->services()->firstOrCreate(['nom' => $serviceNom]);
             }
 
-            // Retirer les anciens services hors liste (ex. noms d'entreprises)
-            // nullOnDelete : les VNF liées perdent le service_id
             $departement->services()
                 ->whereNotIn('nom', $services)
                 ->delete();
         }
 
-        // Sécurité : supprimer tout service restant nommé comme une entreprise
         if (! empty($entreprises)) {
             Service::whereIn('nom', $entreprises)->delete();
         }
+
+        // Garder uniquement les départements définis dans ce seeder
+        Departement::whereNotIn('nom', $nomsGardes)->each(function (Departement $departement) {
+            $departement->services()->delete();
+            $departement->delete();
+        });
     }
 }
